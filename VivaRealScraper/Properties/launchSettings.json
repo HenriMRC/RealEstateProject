@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "VivaRealScraper": {
+      "commandName": "Project",
+      "workingDirectory": "."
+    }
+  }
+}
