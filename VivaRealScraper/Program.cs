@@ -2,6 +2,7 @@
 using Microsoft.VisualBasic.FileIO;
 using System.Net;
 using System.Text.Json;
+using System.Xml.Serialization;
 
 namespace VivaRealScraper
 {
@@ -39,6 +40,63 @@ namespace VivaRealScraper
 
         static void Main(string[] args)
         {
+            XmlSerializer serializer = new(typeof(Input));
+            Input? input;
+            using (FileStream reader = File.OpenRead(".\\Assets\\input.xml"))
+                input = (Input?)serializer.Deserialize(reader);
+
+            if (input == null)
+                throw new ArgumentNullException(nameof(input));
+
+            foreach (Item item in input.Items)
+            {
+                UrlBuilder builder = UrlBuilder.GetUrlBuilder(item, UrlKind.Buy);
+                Uri url = builder.GetUrl(0, SEARCH_SIZE, 0);
+
+                HttpClient client = new();
+                client.DefaultRequestHeaders.Add("x-domain", "www.vivareal.com.br");
+
+                Task<HttpResponseMessage> request = client.GetAsync(url);
+                HttpResponseMessage requestResponse = request.Result;
+                Console.WriteLine(requestResponse.StatusCode);
+
+                Task<string> readTask = requestResponse.Content.ReadAsStringAsync();
+                string json = readTask.Result;
+            }
+
+            foreach (Item item in input.Items)
+            {
+                UrlBuilder builder = UrlBuilder.GetUrlBuilder(item, UrlKind.Rent);
+                Uri url = builder.GetUrl(0, SEARCH_SIZE, 0);
+
+                HttpClient client = new();
+                client.DefaultRequestHeaders.Add("x-domain", "www.vivareal.com.br");
+
+                Task<HttpResponseMessage> request = client.GetAsync(url);
+                HttpResponseMessage requestResponse = request.Result;
+                Console.WriteLine(requestResponse.StatusCode);
+
+                Task<string> readTask = requestResponse.Content.ReadAsStringAsync();
+                string json = readTask.Result;
+            }
+
+            foreach (Item item in input.Items)
+            {
+                UrlBuilder builder = UrlBuilder.GetUrlBuilder(item, UrlKind.Development);
+                Uri url = builder.GetUrl(0, SEARCH_SIZE, 0);
+
+                HttpClient client = new();
+                client.DefaultRequestHeaders.Add("x-domain", "www.vivareal.com.br");
+
+                Task<HttpResponseMessage> request = client.GetAsync(url);
+                HttpResponseMessage requestResponse = request.Result;
+                Console.WriteLine(requestResponse.StatusCode);
+
+                Task<string> readTask = requestResponse.Content.ReadAsStringAsync();
+                string json = readTask.Result;
+            }
+
+            return;
             string today = DateTime.Now.ToString("yyyy_MM_dd");
 
             FileInfo inputFile = GetInputFile(args);
@@ -182,6 +240,9 @@ namespace VivaRealScraper
                 int searchSize = SEARCH_LIMIT - i;
                 if (searchSize == 0)
                 {
+                    if (priceMin == highestPrice)
+                        throw new Exception();
+
                     priceMin = highestPrice;
                     i = 0;
                     searchSize = SEARCH_SIZE;
