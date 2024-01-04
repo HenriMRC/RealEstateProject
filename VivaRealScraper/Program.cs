@@ -1,5 +1,7 @@
 ﻿using HtmlAgilityPack;
 using Microsoft.VisualBasic.FileIO;
+using System.IO.Compression;
+using System.IO;
 using System.Net;
 using System.Text.Json;
 
@@ -8,6 +10,7 @@ namespace VivaRealScraper
     internal class Program
     {
         private const string ASSETS_PATH = ".\\Assets";
+        private const string SAVES_PATH = ".\\Saves";
         private const string INPUT_NAME = "input.csv";
 
         private const string CLASS_1 = "results-summary__count";
@@ -47,7 +50,7 @@ namespace VivaRealScraper
 
             Console.WriteLine($"Input file: {inputFile.FullName}\n");
 
-            ScrapeListings("Buy", "FLorianópolis", "SC", URL_SEARCH);
+            ScrapeListings("Buy", "Florianópolis", "SC", URL_SEARCH);
 
             Console.WriteLine(today);
             Console.ReadLine();
@@ -168,6 +171,9 @@ namespace VivaRealScraper
                     break;
                 default:
                     Console.WriteLine(requestResponse.StatusCode);
+
+                    readTask = requestResponse.Content.ReadAsStringAsync();
+                    Console.WriteLine(readTask.Result);
                     break;
             }
 
@@ -192,8 +198,6 @@ namespace VivaRealScraper
                 Console.WriteLine($"Progress: {i} | {searchSize} | {priceMin}RS");
                 string pageIndex = i == 0 ? string.Empty : i.ToString();
 
-                //string url = $"{URL_request_1}{searchSize}{URL_request_2}{pageIndex}{URL_request_3}";
-
                 string url = $"{URL_1}";
                 if (priceMin != 0)
                     url += $"{URL_OP_1}{priceMin}{URL_OP_2}";
@@ -208,7 +212,13 @@ namespace VivaRealScraper
                         Task<string> readTask = requestResponse.Content.ReadAsStringAsync();
                         string json = readTask.Result;
                         UpdateHighestPrize(json, ref highestPrice, out int count);
-                        //TODO: save
+
+                        //save
+                        DirectoryInfo directoryInfo = new(SAVES_PATH);
+                        if (!directoryInfo.Exists)
+                            directoryInfo.Create();
+
+                        SaveJson(json, SAVES_PATH + $"\\{city}_{type}.zip", $"{priceMin}_{i}.json");
 
                         totalCount += count;
                         if (count < searchSize)
@@ -347,6 +357,24 @@ namespace VivaRealScraper
                 return int.Parse(child.GetString()!);
 
             throw new Exception();
+        }
+
+        private static void SaveJson(string json, string zipName, string fileName)
+        {
+            using (ZipArchive archive = ZipFile.Open(zipName, ZipArchiveMode.Update))
+            {
+                var output = archive.GetEntry(fileName);
+                output?.Delete();
+                output = archive.CreateEntry(fileName);
+
+                using (Stream stream = output.Open())
+                {
+                    using (StreamWriter writer = new(stream))
+                    {
+                        writer.Write(json);
+                    }
+                }
+            }
         }
     }
 }
