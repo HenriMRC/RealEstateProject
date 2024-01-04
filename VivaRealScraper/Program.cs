@@ -24,10 +24,10 @@ namespace VivaRealScraper
         private const string ARG_KEY_INPUT_FILE = "-input-file";
         private const string ARG_KEY_INPUT_PATH = "-input-path";
 
-        private const string URL_SEARCH = "https://www.vivareal.com.br/venda/santa-catarina/florianopolis/#onde=Brasil,Santa%20Catarina,Florian%C3%B3polis,,,,,,BR%3ESanta%20Catarina%3ENULL%3EFlorianopolis,,,";
+        private const string URL_SEARCH = "https://www.vivareal.com.br/aluguel/santa-catarina/florianopolis/#onde=Brasil,Santa%20Catarina,Florian%C3%B3polis,,,,,,BR%3ESanta%20Catarina%3ENULL%3EFlorianopolis,,,";
         private const string MIN_PRICE = "&preco-desde=";
 
-        private const string URL_1 = "https://glue-api.vivareal.com/v2/listings?addressCity=Florian%C3%B3polis&addressLocationId=BR%3ESanta%20Catarina%3ENULL%3EFlorianopolis&addressNeighborhood=&addressState=Santa%20Catarina&addressCountry=Brasil&addressStreet=&addressZone=&addressPointLat=-27.594804&addressPointLon=-48.556929&business=SALE&facets=amenities&unitTypes=&unitSubTypes=&unitTypesV3=&usageTypes=&";
+        private const string URL_1 = "https://glue-api.vivareal.com/v2/listings?addressCity=Florian%C3%B3polis&addressLocationId=BR%3ESanta%20Catarina%3ENULL%3EFlorianopolis&addressNeighborhood=&addressState=Santa%20Catarina&addressCountry=Brasil&addressStreet=&addressZone=&addressPointLat=-27.594804&addressPointLon=-48.556929&business=RENTAL&facets=amenities&unitTypes=&unitSubTypes=&unitTypesV3=&usageTypes=&";
         //nothing here
         private const string URL_OP_1 = "priceMin=";
         //min prize
@@ -36,7 +36,7 @@ namespace VivaRealScraper
         //search size
         private const string URL_3 = "&from=";
         //search start
-        private const string URL_4 = "&sort=pricingInfos.price%20ASC%20sortFilter%3ApricingInfos.businessType%3D%27SALE%27&q=&developmentsSize=";
+        private const string URL_4 = "&sort=pricingInfos.price%20ASC%20sortFilter%3ApricingInfos.businessType%3D%27RENTAL%27&q=&developmentsSize=";
         //development (building in construction) search size
         private const string URL_5 = "&__vt=B&levels=CITY&ref=&pointRadius=&isPOIQuery=";
 
@@ -50,7 +50,8 @@ namespace VivaRealScraper
 
             Console.WriteLine($"Input file: {inputFile.FullName}\n");
 
-            ScrapeListings("Buy", "Florianópolis", "SC", URL_SEARCH);
+            ScrapeListings("Rent", "Florianópolis", "SC", URL_SEARCH);
+            //ScrapeListings("Buy", "Florianópolis", "SC", URL_SEARCH);
 
             Console.WriteLine(today);
             Console.ReadLine();
@@ -150,6 +151,7 @@ namespace VivaRealScraper
             Console.WriteLine($"Scrape: {state} {city} {type}");
 
             HttpClient client = new();
+            client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
 
             HtmlDocument doc = new();
 
@@ -173,12 +175,14 @@ namespace VivaRealScraper
                     Console.WriteLine(requestResponse.StatusCode);
 
                     readTask = requestResponse.Content.ReadAsStringAsync();
-                    Console.WriteLine(readTask.Result);
+                    //Console.WriteLine(readTask.Result);
                     break;
             }
 
             client = new();
             client.DefaultRequestHeaders.Add("x-domain", "www.vivareal.com.br");
+            client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
+            
             Console.WriteLine($"Listing count: {listingsCount}");
             int priceMin = 0;
             int highestPrice = 0;
@@ -214,11 +218,12 @@ namespace VivaRealScraper
                         UpdateHighestPrize(json, ref highestPrice, out int count);
 
                         //save
-                        DirectoryInfo directoryInfo = new(SAVES_PATH);
-                        if (!directoryInfo.Exists)
-                            directoryInfo.Create();
+                        //DirectoryInfo directoryInfo = new(SAVES_PATH);
+                        //if (!directoryInfo.Exists)
+                        //    directoryInfo.Create();
 
-                        SaveJson(json, SAVES_PATH + $"\\{city}_{type}.zip", $"{priceMin}_{i}.json");
+                        //SaveJson(json, SAVES_PATH + $"\\{city}_{type}.zip", $"{priceMin}_{i}.json");
+                        SaveJson(json, SAVES_PATH + $"\\{city}\\{type}\\{priceMin}_{i}.json");
 
                         totalCount += count;
                         if (count < searchSize)
@@ -237,8 +242,7 @@ namespace VivaRealScraper
 
                         client = new();
                         client.DefaultRequestHeaders.Add("x-domain", "www.vivareal.com.br");
-
-                        //                        Console.ReadLine();
+                        client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
                         break;
                     default:
                         readTask = requestResponse.Content.ReadAsStringAsync();
@@ -374,6 +378,28 @@ namespace VivaRealScraper
                         writer.Write(json);
                     }
                 }
+            }
+        }
+
+        private static void SaveJson(string json, string fileName)
+        {
+            FileInfo fileInfo = new(fileName);
+            EnsurePath(fileInfo.Directory);
+            using (StreamWriter writer = new(fileInfo.Create()))
+            {
+                writer.Write(json);
+            }
+        }
+
+        private static void EnsurePath(DirectoryInfo? directory)
+        {
+            if (directory == null)
+                throw new NullReferenceException();
+
+            if (!directory.Exists)
+            {
+                EnsurePath(directory.Parent);
+                directory.Create();
             }
         }
     }
