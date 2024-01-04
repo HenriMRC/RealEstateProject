@@ -1,4 +1,7 @@
-﻿using System.Web;
+﻿using System;
+using System.Net;
+using System.Text;
+using System.Web;
 
 namespace VivaRealScraper;
 
@@ -85,11 +88,11 @@ internal class UrlBuilder
                 throw new NotImplementedException();
         }
 
-        string city = HttpUtility.UrlEncode(input.City);
-        string locationID = HttpUtility.UrlEncode(input.LocationID);
-        string state = HttpUtility.UrlEncode(input.State);
-        string latitude = HttpUtility.UrlEncode(input.Latitude);
-        string longitude = HttpUtility.UrlEncode(input.Logitude);
+        string city = Uri.EscapeDataString(input.City);
+        string locationID = Uri.EscapeDataString(input.LocationID);
+        string state = Uri.EscapeDataString(input.State);
+        string latitude = Uri.EscapeDataString(input.Latitude);
+        string longitude = Uri.EscapeDataString(input.Longitude);
 
         string part_0 = string.Format(FORMAT_PART_0, city, locationID, state, latitude, longitude, business);
         string part_1 = string.Format(FORMAT_PART_1, listingType);
@@ -97,17 +100,17 @@ internal class UrlBuilder
         return new UrlBuilder(part_0, part_1, part_2);
     }
 
-    internal Uri GetUrl(int from, int size, int prizeMin)
+    internal string GetUrl(int from, int size, int priceMin)
     {
         string url = Part_0;
-        if (prizeMin > 0)
-            url += string.Format(FORMAT_PRICE_MIN, prizeMin);
+        if (priceMin > 0)
+            url += string.Format(FORMAT_PRICE_MIN, priceMin);
         url += Part_1 + string.Format(Part_2, size, from) + FORMAT_PART_3;
-        return new(url);
+        return url;
     }
 }
 
-internal enum UrlKind : byte
+public enum UrlKind : byte
 {
     Buy,
     Rent,

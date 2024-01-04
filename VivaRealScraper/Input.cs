@@ -28,9 +28,18 @@ public class Item
     [XmlAttribute("latitude")]
     public string Latitude = string.Empty;
 
-    [XmlAttribute("logitude")]
-    public string Logitude = string.Empty;
+    [XmlAttribute("longitude")]
+    public string Longitude = string.Empty;
 
     [XmlAttribute("levels")]
     public string Levels = string.Empty;
+
+    [XmlElement("business")]
+    public Business[] Business = Array.Empty<Business>();
+}
+
+public class Business
+{
+    [XmlAttribute("kind")]
+    public UrlKind UrlKind;
 }

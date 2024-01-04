@@ -1,6 +1,4 @@
-﻿using HtmlAgilityPack;
-using Microsoft.VisualBasic.FileIO;
-using System.Net;
+﻿using System.Net;
 using System.Text.Json;
 using System.Xml.Serialization;
 
@@ -50,51 +48,28 @@ namespace VivaRealScraper
 
             foreach (Item item in input.Items)
             {
-                UrlBuilder builder = UrlBuilder.GetUrlBuilder(item, UrlKind.Buy);
-                Uri url = builder.GetUrl(0, SEARCH_SIZE, 0);
+                foreach (Business business in item.Business)
+                {
+                    Console.WriteLine($"Scrape: {item.State} {item.City} {business.UrlKind}");
 
-                HttpClient client = new();
-                client.DefaultRequestHeaders.Add("x-domain", "www.vivareal.com.br");
+                    UrlBuilder builder = UrlBuilder.GetUrlBuilder(item, business.UrlKind);
+                    ScrapeListings(builder);
 
-                Task<HttpResponseMessage> request = client.GetAsync(url);
-                HttpResponseMessage requestResponse = request.Result;
-                Console.WriteLine(requestResponse.StatusCode);
+                    //Uri url = builder.GetUrl(0, SEARCH_SIZE, 0);
 
-                Task<string> readTask = requestResponse.Content.ReadAsStringAsync();
-                string json = readTask.Result;
+                    //HttpClient client = new();
+                    //client.DefaultRequestHeaders.Add("x-domain", "www.vivareal.com.br");
+
+                    //Task<HttpResponseMessage> request = client.GetAsync(url);
+                    //HttpResponseMessage requestResponse = request.Result;
+                    //Console.WriteLine(requestResponse.StatusCode);
+
+                    //Task<string> readTask = requestResponse.Content.ReadAsStringAsync();
+                    //string json = readTask.Result;
+                }
             }
 
-            foreach (Item item in input.Items)
-            {
-                UrlBuilder builder = UrlBuilder.GetUrlBuilder(item, UrlKind.Rent);
-                Uri url = builder.GetUrl(0, SEARCH_SIZE, 0);
-
-                HttpClient client = new();
-                client.DefaultRequestHeaders.Add("x-domain", "www.vivareal.com.br");
-
-                Task<HttpResponseMessage> request = client.GetAsync(url);
-                HttpResponseMessage requestResponse = request.Result;
-                Console.WriteLine(requestResponse.StatusCode);
-
-                Task<string> readTask = requestResponse.Content.ReadAsStringAsync();
-                string json = readTask.Result;
-            }
-
-            foreach (Item item in input.Items)
-            {
-                UrlBuilder builder = UrlBuilder.GetUrlBuilder(item, UrlKind.Development);
-                Uri url = builder.GetUrl(0, SEARCH_SIZE, 0);
-
-                HttpClient client = new();
-                client.DefaultRequestHeaders.Add("x-domain", "www.vivareal.com.br");
-
-                Task<HttpResponseMessage> request = client.GetAsync(url);
-                HttpResponseMessage requestResponse = request.Result;
-                Console.WriteLine(requestResponse.StatusCode);
-
-                Task<string> readTask = requestResponse.Content.ReadAsStringAsync();
-                string json = readTask.Result;
-            }
+            Console.ReadLine();
 
             return;
             string today = DateTime.Now.ToString("yyyy_MM_dd");
@@ -104,8 +79,6 @@ namespace VivaRealScraper
                 ThrowCriticalError($"File ({inputFile.FullName}) not found.", 2);
 
             Console.WriteLine($"Input file: {inputFile.FullName}\n");
-
-            ScrapeListings("Buy", "FLorianópolis", "SC", URL_SEARCH);
 
             Console.WriteLine(today);
             Console.ReadLine();
@@ -167,99 +140,39 @@ namespace VivaRealScraper
             Environment.Exit(exitCode);
         }
 
-        private static IReadOnlyList<IReadOnlyDictionary<string, string>> ParseCSVWithHeader(FileInfo file)
+        private static void ScrapeListings(UrlBuilder builder)
         {
-            List<IReadOnlyDictionary<string, string>> output = new();
-            using (TextFieldParser parser = new(file.FullName))
-            {
-                parser.SetDelimiters(",");
+            HttpClient client = GetHttpClient();
 
-                if (!parser.EndOfData)
-                {
-                    string[]? headers = parser.ReadFields();
-                    if (headers == null)
-                        throw new ArgumentNullException(nameof(headers)); //TODO: review this
+            string url;
 
-                    while (!parser.EndOfData)
-                    {
-                        string[]? values = parser.ReadFields();
-                        if (values == null || values.Length == 0)
-                            continue;
+            Task<HttpResponseMessage> request;
+            HttpResponseMessage requestResponse;
 
-                        if (values.Length > headers.Length)
-                            throw new Exception(); //TODO: review this
-
-                        Dictionary<string, string> row = new();
-                        for (int i = 0; i < values.Length; i++)
-                            row.Add(headers[i], values[i]);
-                        output.Add(row);
-                    }
-                }
-            }
-
-            return output.ToArray();
-        }
-
-        private static void ScrapeListings(string type, string city, string state, string URL_search)
-        {
-            Console.WriteLine($"Scrape: {state} {city} {type}");
-
-            HttpClient client = new();
-
-            HtmlDocument doc = new();
-
-            Task<HttpResponseMessage> request = client.GetAsync(URL_search);
-            HttpResponseMessage requestResponse = request.Result;
-
-            int listingsCount = 0;
-
-            switch (requestResponse.StatusCode)
-            {
-                case HttpStatusCode.OK:
-                    Task<string> readTask = requestResponse.Content.ReadAsStringAsync();
-                    string html = readTask.Result;
-
-                    doc.LoadHtml(html);
-                    HtmlNode node = doc.DocumentNode.Descendants().Single(n => n.HasClass(CLASS_1) && n.HasClass(CLASS_2));
-
-                    listingsCount = int.Parse(node.InnerHtml.Trim().Replace(".", ""));
-                    break;
-                default:
-                    Console.WriteLine(requestResponse.StatusCode);
-                    break;
-            }
-
-            client = new();
-            client.DefaultRequestHeaders.Add("x-domain", "www.vivareal.com.br");
-            Console.WriteLine($"Listing count: {listingsCount}");
             int priceMin = 0;
             int highestPrice = 0;
             int totalCount = 0;
-            for (int i = 0; i < listingsCount;)
+            int index = 0;
+
+            while (true)
             {
-                int searchSize = SEARCH_LIMIT - i;
+
+                int searchSize = SEARCH_LIMIT - index;
                 if (searchSize == 0)
                 {
                     if (priceMin == highestPrice)
                         throw new Exception();
 
                     priceMin = highestPrice;
-                    i = 0;
+                    index = 0;
                     searchSize = SEARCH_SIZE;
                 }
                 else if (searchSize > SEARCH_SIZE)
                     searchSize = SEARCH_SIZE;
 
-                Console.WriteLine($"Progress: {i} | {searchSize} | {priceMin}RS");
-                string pageIndex = i == 0 ? string.Empty : i.ToString();
+                Console.WriteLine($"Progress: {index} | {searchSize} | {priceMin}RS");
 
-                //string url = $"{URL_request_1}{searchSize}{URL_request_2}{pageIndex}{URL_request_3}";
-
-                string url = $"{URL_1}";
-                if (priceMin != 0)
-                    url += $"{URL_OP_1}{priceMin}{URL_OP_2}";
-                url += $"{URL_2}{searchSize}{URL_3}{pageIndex}{URL_4}{searchSize}{URL_5}";
-
+                url = builder.GetUrl(index, searchSize, priceMin);
                 request = client.GetAsync(url);
                 requestResponse = request.Result;
 
@@ -269,7 +182,13 @@ namespace VivaRealScraper
                         Task<string> readTask = requestResponse.Content.ReadAsStringAsync();
                         string json = readTask.Result;
                         UpdateHighestPrize(json, ref highestPrice, out int count);
+
                         //TODO: save
+                        //FileInfo file = new("path");
+                        //using (var stream = file.OpenWrite())
+                        //{
+
+                        //}
 
                         totalCount += count;
                         if (count < searchSize)
@@ -278,32 +197,27 @@ namespace VivaRealScraper
                             return;
                         }
 
-                        i += searchSize;
+                        index += searchSize;
                         break;
                     case HttpStatusCode.TooManyRequests:
-                        readTask = requestResponse.Content.ReadAsStringAsync();
-                        json = readTask.Result;
-
                         Console.WriteLine(requestResponse.StatusCode);
 
-                        client = new();
-                        client.DefaultRequestHeaders.Add("x-domain", "www.vivareal.com.br");
-
-                        //                        Console.ReadLine();
+                        client = GetHttpClient();
                         break;
                     default:
-                        readTask = requestResponse.Content.ReadAsStringAsync();
-                        json = readTask.Result;
-
-                        Console.WriteLine($"[{pageIndex}:{searchSize}] - {requestResponse.StatusCode}");
+                        Console.WriteLine($"[{index}:{searchSize}] - {requestResponse.StatusCode}");
                         Console.ReadLine();
                         break;
                 }
-
-                //Thread.Sleep(1_000); //TODO: review - last iteration does no need
             }
+        }
 
-            Console.WriteLine($"Progress: 100.00%");
+        private static HttpClient GetHttpClient()
+        {
+            HttpClient client = new();
+            client.DefaultRequestHeaders.Add("x-domain", "www.vivareal.com.br");
+            client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
+            return client;
         }
 
         private static void UpdateHighestPrize(string json, ref int highestPrize, out int responseCount)
@@ -316,7 +230,6 @@ namespace VivaRealScraper
                 if (current > highestPrize)
                     highestPrize = current;
             }
-
         }
 
         private static int Step1(JsonElement element, out int count)
@@ -384,30 +297,50 @@ namespace VivaRealScraper
         private static int Step6(JsonElement element)
         {
             if (element.TryGetProperty("pricingInfos", out JsonElement child))
-                return Step7(child);
+            {
+                if (Step7(child, out int price))
+                    return price;
+                else
+                {
+                    element.TryGetProperty("showPrice", out JsonElement showPrice);
+                    if (showPrice.GetBoolean())
+                        throw new Exception();
+                    else
+                        return 0;
+                }
+            }
 
             throw new Exception();
         }
 
-        private static int Step7(JsonElement element)
+        private static bool Step7(JsonElement element, out int price)
         {
-            //TODO
-            //if (element.GetArrayLength() != 1)
-            //    throw new ArgumentOutOfRangeException();
+            if (element.GetArrayLength() != 1)
+                throw new ArgumentOutOfRangeException();
 
             int length = element.GetArrayLength();
             for (int i = 0; i < length; i++)
-                return Step8(element[i]);
+            {
+                if (Step8(element[i], out price))
+                    return true;
+            }
 
-            throw new Exception();
+            price = 0;
+            return false;
         }
 
-        private static int Step8(JsonElement element)
+        private static bool Step8(JsonElement element, out int price)
         {
             if (element.TryGetProperty("price", out JsonElement child))
-                return int.Parse(child.GetString()!);
-
-            throw new Exception();
+            {
+                price = int.Parse(child.GetString()!);
+                return true;
+            }
+            else
+            {
+                price = 0;
+                return false;
+            }
         }
     }
 }
