@@ -38,6 +38,10 @@ namespace VivaRealScraper
 
         static void Main(string[] args)
         {
+            //ZipWriter.SaveJson("{\"test\":0}", ".\\Data\\Test.zip", "Test.json");
+            //ZipWriter.SaveJson("{\"test\":1}", ".\\Data\\Test.zip", "TestFolder\\Test.json");
+            //return;
+
             XmlSerializer serializer = new(typeof(Input));
             Input? input;
             using (FileStream reader = File.OpenRead(".\\Assets\\input.xml"))
@@ -51,27 +55,12 @@ namespace VivaRealScraper
                 foreach (Business business in item.Business)
                 {
                     Console.WriteLine($"Scrape: {item.State} {item.City} {business.UrlKind}");
-
-                    UrlBuilder builder = UrlBuilder.GetUrlBuilder(item, business.UrlKind);
-                    ScrapeListings(builder);
-
-                    //Uri url = builder.GetUrl(0, SEARCH_SIZE, 0);
-
-                    //HttpClient client = new();
-                    //client.DefaultRequestHeaders.Add("x-domain", "www.vivareal.com.br");
-
-                    //Task<HttpResponseMessage> request = client.GetAsync(url);
-                    //HttpResponseMessage requestResponse = request.Result;
-                    //Console.WriteLine(requestResponse.StatusCode);
-
-                    //Task<string> readTask = requestResponse.Content.ReadAsStringAsync();
-                    //string json = readTask.Result;
+                    ScrapeListings(item, business.UrlKind);
                 }
             }
 
             Console.ReadLine();
 
-            return;
             string today = DateTime.Now.ToString("yyyy_MM_dd");
 
             FileInfo inputFile = GetInputFile(args);
@@ -140,8 +129,11 @@ namespace VivaRealScraper
             Environment.Exit(exitCode);
         }
 
-        private static void ScrapeListings(UrlBuilder builder)
+        private static void ScrapeListings(Item item, UrlKind urlKind)
         {
+            UrlBuilder builder = new(item, urlKind);
+            UrlKindUtility.GetBusinessAndTypeFromUrlKind(urlKind, out string business, out string listingType);
+
             HttpClient client = GetHttpClient();
 
             string url;
@@ -220,7 +212,7 @@ namespace VivaRealScraper
             return client;
         }
 
-        private static void UpdateHighestPrize(string json, ref int highestPrize, out int responseCount)
+        private static void UpdateHighestPrize(string json/*, string business*/, ref int highestPrize, out int responseCount)
         {
             //TODO:replace JsonDocument with JsonNode (???) or maybe JsonObject
             //JsonNode? test = JsonNode.Parse(json);
@@ -313,7 +305,7 @@ namespace VivaRealScraper
             throw new Exception();
         }
 
-        private static bool Step7(JsonElement element, out int price)
+        private static bool Step7(JsonElement element/*, string business*/, out int price)
         {
             if (element.GetArrayLength() != 1)
                 throw new ArgumentOutOfRangeException();

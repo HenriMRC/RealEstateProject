@@ -1,9 +1,4 @@
-﻿using System;
-using System.Net;
-using System.Text;
-using System.Web;
-
-namespace VivaRealScraper;
+﻿namespace VivaRealScraper;
 
 internal class UrlBuilder
 {
@@ -54,35 +49,18 @@ internal class UrlBuilder
     private readonly string Part_1;
     private readonly string Part_2;
 
-
-    private UrlBuilder(string part0, string part1, string part2)
+    public UrlBuilder(Item input, UrlKind kind)
     {
-        Part_0 = part0;
-        Part_1 = part1;
-        Part_2 = part2;
-    }
+        Part_2 = FORMAT_PART_2;
 
-    internal static UrlBuilder GetUrlBuilder(Item input, UrlKind kind)
-    {
-        string part_2 = FORMAT_PART_2;
-
-        string business;
-        string listingType;
+        UrlKindUtility.GetBusinessAndTypeFromUrlKind(kind, out string business, out string listingType);
         switch (kind)
         {
             case UrlKind.Buy:
-                business = "SALE";
-                listingType = "USED";
-                part_2 += FORMAT_DEVELOPMENT;
-                break;
             case UrlKind.Rent:
-                business = "RENTAL";
-                listingType = "USED";
-                part_2 += FORMAT_DEVELOPMENT;
+                Part_2 += FORMAT_DEVELOPMENT;
                 break;
             case UrlKind.Development:
-                business = "SALE";
-                listingType = "DEVELOPMENT";
                 break;
             default:
                 throw new NotImplementedException();
@@ -94,10 +72,8 @@ internal class UrlBuilder
         string latitude = Uri.EscapeDataString(input.Latitude);
         string longitude = Uri.EscapeDataString(input.Longitude);
 
-        string part_0 = string.Format(FORMAT_PART_0, city, locationID, state, latitude, longitude, business);
-        string part_1 = string.Format(FORMAT_PART_1, listingType);
-
-        return new UrlBuilder(part_0, part_1, part_2);
+        Part_0 = string.Format(FORMAT_PART_0, city, locationID, state, latitude, longitude, business);
+        Part_1 = string.Format(FORMAT_PART_1, listingType);
     }
 
     internal string GetUrl(int from, int size, int priceMin)
@@ -115,4 +91,29 @@ public enum UrlKind : byte
     Buy,
     Rent,
     Development
+}
+
+public static class UrlKindUtility
+{
+    public static void GetBusinessAndTypeFromUrlKind(UrlKind kind, out string business, out string listingType)
+    {
+        switch (kind)
+        {
+            case UrlKind.Buy:
+                business = "SALE";
+                listingType = "USED";
+                break;
+            case UrlKind.Rent:
+                business = "RENTAL";
+                listingType = "USED";
+                break;
+            case UrlKind.Development:
+                business = "SALE";
+                listingType = "DEVELOPMENT";
+                break;
+            default:
+                throw new NotImplementedException();
+        }
+
+    }
 }
