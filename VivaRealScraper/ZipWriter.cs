@@ -1,5 +1,4 @@
 ﻿using System.IO.Compression;
-using System.IO;
 
 namespace VivaRealScraper
 {
@@ -10,21 +9,40 @@ namespace VivaRealScraper
             FileInfo fileInfo = new(zipPath);
             EnsurePath(fileInfo.Directory);
 
-            using (ZipArchive archive = ZipFile.Open(zipPath, ZipArchiveMode.Update))
+            ZipArchive? archive = null;
+            bool loop = true;
+            while (loop)
             {
-                var output = archive.GetEntry(fileName);
-                output?.Delete();
-                output = archive.CreateEntry(fileName);
-
-                using (Stream stream = output.Open())
+                try
                 {
-                    using (StreamWriter writer = new(stream))
+                    archive = ZipFile.Open(zipPath, ZipArchiveMode.Update);
+
+                    ZipArchiveEntry? output = archive.GetEntry(fileName);
+                    output?.Delete();
+                    output = archive.CreateEntry(fileName);
+
+                    using (Stream stream = output.Open())
                     {
-                        writer.Write(json);
+                        using (StreamWriter writer = new(stream))
+                        {
+                            writer.Write(json);
+                        }
                     }
+
+                    loop = false;
+                }
+                catch (IOException exception)
+                {
+                    Console.WriteLine(exception.Message);
+                    const int SLEEP = 1_000;
+                    Console.WriteLine($"Sleep {SLEEP}ms");
+                    Thread.Sleep(SLEEP);
+                }
+                finally
+                {
+                    archive?.Dispose();
                 }
             }
-
         }
 
         private static void EnsurePath(DirectoryInfo? directory)

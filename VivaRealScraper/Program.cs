@@ -7,10 +7,8 @@ namespace VivaRealScraper
     internal class Program
     {
         private const string ASSETS_PATH = ".\\Assets";
+        private const string SAVE_PATH = ".\\Saves";
         private const string INPUT_NAME = "input.csv";
-
-        private const string CLASS_1 = "results-summary__count";
-        private const string CLASS_2 = "js-total-records";
 
         private const int SEARCH_SIZE = 110;
         private const int SEARCH_LIMIT = 10_000;
@@ -19,22 +17,6 @@ namespace VivaRealScraper
         private const string ARG_KEY_ASSETS_PATH = "-assets-path";
         private const string ARG_KEY_INPUT_FILE = "-input-file";
         private const string ARG_KEY_INPUT_PATH = "-input-path";
-
-        private const string URL_SEARCH = "https://www.vivareal.com.br/venda/santa-catarina/florianopolis/#onde=Brasil,Santa%20Catarina,Florian%C3%B3polis,,,,,,BR%3ESanta%20Catarina%3ENULL%3EFlorianopolis,,,";
-        private const string MIN_PRICE = "&preco-desde=";
-
-        private const string URL_1 = "https://glue-api.vivareal.com/v2/listings?addressCity=Florian%C3%B3polis&addressLocationId=BR%3ESanta%20Catarina%3ENULL%3EFlorianopolis&addressNeighborhood=&addressState=Santa%20Catarina&addressCountry=Brasil&addressStreet=&addressZone=&addressPointLat=-27.594804&addressPointLon=-48.556929&business=SALE&facets=amenities&unitTypes=&unitSubTypes=&unitTypesV3=&usageTypes=&";
-        //nothing here
-        private const string URL_OP_1 = "priceMin=";
-        //min prize
-        private const string URL_OP_2 = "&";
-        private const string URL_2 = "listingType=USED&parentId=null&categoryPage=RESULT&images=webp&includeFields=search(result(listings(listing(displayAddressType%2Camenities%2CusableAreas%2CconstructionStatus%2ClistingType%2Cdescription%2Ctitle%2CunitTypes%2CnonActivationReason%2CpropertyType%2CunitSubTypes%2Cid%2Cportal%2CparkingSpaces%2Caddress%2Csuites%2CpublicationType%2CexternalId%2Cbathrooms%2CusageTypes%2CtotalAreas%2CadvertiserId%2Cbedrooms%2CpricingInfos%2CshowPrice%2Cstatus%2CadvertiserContact%2CvideoTourLink%2CwhatsappNumber%2Cstamps)%2Caccount(id%2Cname%2ClogoUrl%2ClicenseNumber%2CshowAddress%2ClegacyVivarealId%2Cphones%2Ctier)%2Cmedias%2CaccountLink%2Clink))%2CtotalCount)%2Cpage%2CseasonalCampaigns%2CfullUriFragments%2Cnearby(search(result(listings(listing(displayAddressType%2Camenities%2CusableAreas%2CconstructionStatus%2ClistingType%2Cdescription%2Ctitle%2CunitTypes%2CnonActivationReason%2CpropertyType%2CunitSubTypes%2Cid%2Cportal%2CparkingSpaces%2Caddress%2Csuites%2CpublicationType%2CexternalId%2Cbathrooms%2CusageTypes%2CtotalAreas%2CadvertiserId%2Cbedrooms%2CpricingInfos%2CshowPrice%2Cstatus%2CadvertiserContact%2CvideoTourLink%2CwhatsappNumber%2Cstamps)%2Caccount(id%2Cname%2ClogoUrl%2ClicenseNumber%2CshowAddress%2ClegacyVivarealId%2Cphones%2Ctier)%2Cmedias%2CaccountLink%2Clink))%2CtotalCount))%2Cexpansion(search(result(listings(listing(displayAddressType%2Camenities%2CusableAreas%2CconstructionStatus%2ClistingType%2Cdescription%2Ctitle%2CunitTypes%2CnonActivationReason%2CpropertyType%2CunitSubTypes%2Cid%2Cportal%2CparkingSpaces%2Caddress%2Csuites%2CpublicationType%2CexternalId%2Cbathrooms%2CusageTypes%2CtotalAreas%2CadvertiserId%2Cbedrooms%2CpricingInfos%2CshowPrice%2Cstatus%2CadvertiserContact%2CvideoTourLink%2CwhatsappNumber%2Cstamps)%2Caccount(id%2Cname%2ClogoUrl%2ClicenseNumber%2CshowAddress%2ClegacyVivarealId%2Cphones%2Ctier)%2Cmedias%2CaccountLink%2Clink))%2CtotalCount))%2Caccount(id%2Cname%2ClogoUrl%2ClicenseNumber%2CshowAddress%2ClegacyVivarealId%2Cphones%2Ctier%2Cphones)%2Cfacets&size=";
-        //search size
-        private const string URL_3 = "&from=";
-        //search start
-        private const string URL_4 = "&sort=pricingInfos.price%20ASC%20sortFilter%3ApricingInfos.businessType%3D%27SALE%27&q=&developmentsSize=";
-        //development (building in construction) search size
-        private const string URL_5 = "&__vt=B&levels=CITY&ref=&pointRadius=&isPOIQuery=";
 
         static void Main(string[] args)
         {
@@ -50,26 +32,25 @@ namespace VivaRealScraper
             if (input == null)
                 throw new ArgumentNullException(nameof(input));
 
+            string date = DateTime.Now.ToString("yyyy_MM_dd");
             foreach (Item item in input.Items)
             {
                 foreach (Business business in item.Business)
                 {
                     Console.WriteLine($"Scrape: {item.State} {item.City} {business.UrlKind}");
-                    ScrapeListings(item, business.UrlKind);
+                    ScrapeListings(item, business.UrlKind, date);
                 }
             }
 
+            Console.WriteLine("Finished scrapping. Press [Enter] to close program.");
             Console.ReadLine();
-
-            string today = DateTime.Now.ToString("yyyy_MM_dd");
+            return;
 
             FileInfo inputFile = GetInputFile(args);
             if (!inputFile.Exists)
                 ThrowCriticalError($"File ({inputFile.FullName}) not found.", 2);
 
             Console.WriteLine($"Input file: {inputFile.FullName}\n");
-
-            Console.WriteLine(today);
             Console.ReadLine();
         }
 
@@ -129,12 +110,14 @@ namespace VivaRealScraper
             Environment.Exit(exitCode);
         }
 
-        private static void ScrapeListings(Item item, UrlKind urlKind)
+        private static void ScrapeListings(Item item, UrlKind urlKind, string date)
         {
             UrlBuilder builder = new(item, urlKind);
             UrlKindUtility.GetBusinessAndTypeFromUrlKind(urlKind, out string business, out _, out _, out _);
 
             HttpClient client = GetHttpClient();
+
+            string zipPath = $"{SAVE_PATH}\\{date}\\{item.City}\\{urlKind}.zip";
 
             string url;
 
@@ -143,8 +126,8 @@ namespace VivaRealScraper
 
             int priceMin = 0;
             int highestPrice = 0;
-            int totalCount = 0;
             int index = 0;
+            int fileName = 0;
 
             while (true)
             {
@@ -175,21 +158,13 @@ namespace VivaRealScraper
                         string json = readTask.Result;
                         UpdateHighestPrize(json, business, ref highestPrice, out int count);
 
-                        //TODO: save
-                        //FileInfo file = new("path");
-                        //using (var stream = file.OpenWrite())
-                        //{
+                        ZipWriter.SaveJson(json, zipPath, $"{fileName:00000}.json");
 
-                        //}
-
-                        totalCount += count;
                         if (count < searchSize)
-                        {
-                            Console.WriteLine($"Total count: {totalCount}");
                             return;
-                        }
 
                         index += searchSize;
+                        fileName++;
                         break;
                     case HttpStatusCode.TooManyRequests:
                         Console.WriteLine(requestResponse.StatusCode);
