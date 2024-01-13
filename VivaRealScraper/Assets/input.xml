@@ -1,8 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <inputs>
+  <!--
   <item city="São Paulo" state="São Paulo" location_id="BR>Sao Paulo>NULL>Sao Paulo" latitude="-23.555771" longitude="-46.639557" levels="CITY">
+    <business kind="Buy"/>
+    <business kind="Rent"/>
     <business kind="Development"/>
   </item>
+  -->
   <item city="Florianópolis" state="Santa Catarina" location_id="BR>Santa Catarina>NULL>Florianopolis" latitude="-27.594804" longitude="-48.556929" levels="CITY">
     <business kind="Buy"/>
     <business kind="Rent"/>

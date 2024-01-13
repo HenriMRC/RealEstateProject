@@ -132,7 +132,7 @@ namespace VivaRealScraper
         private static void ScrapeListings(Item item, UrlKind urlKind)
         {
             UrlBuilder builder = new(item, urlKind);
-            UrlKindUtility.GetBusinessAndTypeFromUrlKind(urlKind, out string business, out string listingType);
+            UrlKindUtility.GetBusinessAndTypeFromUrlKind(urlKind, out string business, out _, out _, out _);
 
             HttpClient client = GetHttpClient();
 
@@ -173,7 +173,7 @@ namespace VivaRealScraper
                     case HttpStatusCode.OK:
                         Task<string> readTask = requestResponse.Content.ReadAsStringAsync();
                         string json = readTask.Result;
-                        UpdateHighestPrize(json, ref highestPrice, out int count);
+                        UpdateHighestPrize(json, business, ref highestPrice, out int count);
 
                         //TODO: save
                         //FileInfo file = new("path");
@@ -212,33 +212,33 @@ namespace VivaRealScraper
             return client;
         }
 
-        private static void UpdateHighestPrize(string json/*, string business*/, ref int highestPrize, out int responseCount)
+        private static void UpdateHighestPrize(string json, string business, ref int highestPrize, out int responseCount)
         {
             //TODO:replace JsonDocument with JsonNode (???) or maybe JsonObject
             //JsonNode? test = JsonNode.Parse(json);
             using (JsonDocument doc = JsonDocument.Parse(json))
             {
-                int current = Step1(doc.RootElement, out responseCount);
+                int current = Step1(doc.RootElement, business, out responseCount);
                 if (current > highestPrize)
                     highestPrize = current;
             }
         }
 
-        private static int Step1(JsonElement element, out int count)
+        private static int Step1(JsonElement element, string business, out int count)
         {
             int output = int.MinValue;
             count = 0;
 
             if (element.TryGetProperty("search", out JsonElement child))
             {
-                int current = Step2(child, out count);
+                int current = Step2(child, business, out count);
                 if (output < current)
                     output = current;
             }
 
             if (element.TryGetProperty("developments", out child))
             {
-                int current = Step1(child, out count);
+                int current = Step1(child, business, out count);
                 if (output < current)
                     output = current;
             }
@@ -246,30 +246,30 @@ namespace VivaRealScraper
             return output;
         }
 
-        private static int Step2(JsonElement element, out int count)
+        private static int Step2(JsonElement element, string business, out int count)
         {
             if (element.TryGetProperty("result", out JsonElement child))
-                return Step3(child, out count);
+                return Step3(child, business, out count);
 
             throw new Exception();
         }
 
-        private static int Step3(JsonElement element, out int count)
+        private static int Step3(JsonElement element, string business, out int count)
         {
             if (element.TryGetProperty("listings", out JsonElement child))
-                return Step4(child, out count);
+                return Step4(child, business, out count);
 
             throw new Exception();
         }
 
-        private static int Step4(JsonElement element, out int count)
+        private static int Step4(JsonElement element, string business, out int count)
         {
             int output = int.MinValue;
 
             int length = element.GetArrayLength();
             for (int i = 0; i < length; i++)
             {
-                int current = Step5(element[i]);
+                int current = Step5(element[i], business);
                 if (output < current)
                     output = current;
             }
@@ -278,19 +278,19 @@ namespace VivaRealScraper
             return output;
         }
 
-        private static int Step5(JsonElement element)
+        private static int Step5(JsonElement element, string business)
         {
             if (element.TryGetProperty("listing", out JsonElement child))
-                return Step6(child);
+                return Step6(child, business);
 
             throw new Exception();
         }
 
-        private static int Step6(JsonElement element)
+        private static int Step6(JsonElement element, string business)
         {
             if (element.TryGetProperty("pricingInfos", out JsonElement child))
             {
-                if (Step7(child, out int price))
+                if (Step7(child, business, out int price))
                     return price;
                 else
                 {
@@ -305,16 +305,32 @@ namespace VivaRealScraper
             throw new Exception();
         }
 
-        private static bool Step7(JsonElement element/*, string business*/, out int price)
+        private static bool Step7(JsonElement element, string business, out int price)
         {
-            if (element.GetArrayLength() != 1)
-                throw new ArgumentOutOfRangeException();
-
+            bool found = false;
             int length = element.GetArrayLength();
             for (int i = 0; i < length; i++)
             {
-                if (Step8(element[i], out price))
-                    return true;
+                JsonElement child = element[i];
+
+                if (child.TryGetProperty("businessType", out JsonElement businessTypeElement))
+                {
+                    string businessType = businessTypeElement.GetString() ?? throw new ArgumentNullException();
+                    if (businessType == business)
+                    {
+                        if (found)
+                            throw new Exception();
+                        else
+                            found = true;
+
+                        if (Step8(child, out price))
+                            return true;
+                    }
+                    else
+                        continue;
+                }
+                else
+                    throw new ArgumentOutOfRangeException();
             }
 
             price = 0;
