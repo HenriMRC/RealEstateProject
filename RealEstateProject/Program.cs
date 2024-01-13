@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Xml.Serialization;
 
-namespace VivaRealScraper
+namespace RealEstateProject
 {
     internal class Program
     {

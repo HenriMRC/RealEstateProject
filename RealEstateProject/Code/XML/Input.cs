@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace VivaRealScraper;
+namespace RealEstateProject;
 
 [XmlRoot("inputs", IsNullable = false)]
 public class Input

@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "VivaRealScraper": {
+    "RealEstateProject": {
       "commandName": "Project",
       "workingDirectory": "."
     }

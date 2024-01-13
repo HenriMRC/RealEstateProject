@@ -1,4 +1,4 @@
-﻿namespace VivaRealScraper;
+﻿namespace RealEstateProject;
 
 internal class UrlBuilder
 {
