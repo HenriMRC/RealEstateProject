@@ -9,7 +9,7 @@ internal class ResponseProcessor : IDisposable
     private Task _task;
     private bool _finish = false;
 
-    private Queue<string> _queue = new();
+    private Queue<(string fileName, string json)> _queue = new();
     private object _queueLock = new();
 
     internal ResponseProcessor(string zipPath)
@@ -25,39 +25,38 @@ internal class ResponseProcessor : IDisposable
     {
         while (true)
         {
-            string json;
+            (string fileName, string json) data;
             lock (_queueLock)
             {
                 if (_finish && _queue.Count == 0)
                     return;
 
-                if (!_queue.TryDequeue(out json!))
+                if (!_queue.TryDequeue(out data))
                     continue;
             }
 
-            string fileName = $"{_zipArchive.Entries.Count:00000}.json";
-            ZipArchiveEntry? output = _zipArchive.GetEntry(fileName);
+            ZipArchiveEntry? output = _zipArchive.GetEntry(data.fileName);
             output?.Delete();
-            output = _zipArchive.CreateEntry(fileName, CompressionLevel.SmallestSize);
+            output = _zipArchive.CreateEntry(data.fileName, CompressionLevel.SmallestSize);
 
             using (Stream stream = output.Open())
             {
                 using (StreamWriter writer = new(stream))
                 {
-                    writer.WriteLine(json);
+                    writer.WriteLine(data.json);
                 }
             }
         }
     }
 
-    internal void Process(string json, string business, ref int highestPrize, out int responseCount)
+    internal void Process((string fileName, string json) data, string business, ref int highestPrize, out int responseCount)
     {
         lock (_queueLock)
         {
-            _queue.Enqueue(json);
+            _queue.Enqueue(data);
         }
 
-        using (JsonDocument doc = JsonDocument.Parse(json))
+        using (JsonDocument doc = JsonDocument.Parse(data.json))
         {
             int current = Step1(doc.RootElement, business, out responseCount);
             if (current > highestPrize)

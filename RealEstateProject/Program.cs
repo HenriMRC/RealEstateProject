@@ -5,9 +5,9 @@ namespace RealEstateProject;
 
 internal class Program
 {
-    private const string ASSETS_PATH = ".\\Assets";
-    private const string SAVE_PATH = ".\\Saves";
-    private const string INPUT_NAME = "input.csv";
+    private const string DEFAULT_ASSETS_PATH = ".\\Assets";
+    private const string DEFAULT_SAVE_PATH = ".\\Assets\\Saves";
+    private const string DEFAULT_INPUT_NAME = "input.xml";
 
     private const int SEARCH_SIZE = 110;
     private const int SEARCH_LIMIT = 10_000;
@@ -16,47 +16,45 @@ internal class Program
     private const string ARG_KEY_ASSETS_PATH = "-assets-path";
     private const string ARG_KEY_INPUT_FILE = "-input-file";
     private const string ARG_KEY_INPUT_PATH = "-input-path";
+    private const string ARG_KEY_SAVES_PATH = "-saves-path";
 
     static void Main(string[] args)
     {
-        //ZipWriter.SaveJson("{\"test\":0}", ".\\Data\\Test.zip", "Test.json");
-        //ZipWriter.SaveJson("{\"test\":1}", ".\\Data\\Test.zip", "TestFolder\\Test.json");
-        //return;
-
         XmlSerializer serializer = new(typeof(Input));
         Input? input;
-        using (FileStream reader = File.OpenRead(".\\Assets\\input.xml"))
+
+        GetInputFile(args, out FileInfo inputFile, out string savesPath);
+        using (FileStream reader = inputFile.OpenRead())
             input = (Input?)serializer.Deserialize(reader);
 
         if (input == null)
             throw new ArgumentNullException(nameof(input));
 
         string date = DateTime.Now.ToString("yyyy_MM_dd");
-        foreach (Item item in input.Items)
+        using (ResponseProcessor processor = new($"{savesPath}\\{date}.zip"))
         {
-            foreach (Business business in item.Business)
+            foreach (Item item in input.Items)
             {
-                Console.WriteLine($"Scrape: {item.State} {item.City} {business.UrlKind}");
-                ScrapeListings(item, business.UrlKind, date);
+                foreach (Business business in item.Business)
+                {
+                    Console.WriteLine($"Scrape: {item.State} {item.City} {business.UrlKind}");
+                    ScrapeListings(item, business.UrlKind, processor);
+                }
             }
         }
 
         Console.WriteLine("Finished scrapping. Press [Enter] to close program.");
         Console.ReadLine();
-        return;
-
-        FileInfo inputFile = GetInputFile(args);
-        if (!inputFile.Exists)
-            ThrowCriticalError($"File ({inputFile.FullName}) not found.", 2);
-
-        Console.WriteLine($"Input file: {inputFile.FullName}\n");
-        Console.ReadLine();
     }
 
-    private static FileInfo GetInputFile(string[] args)
+    private static void GetInputFile(string[] args, out FileInfo inputFile, out string savesPath)
     {
+        inputFile = null!;
+        savesPath = null!;
+
         string? assetsPath = null;
         string? fileName = null;
+
         for (int i = 0; i < args.Length; i++)
         {
             string arg = args[i];
@@ -74,32 +72,41 @@ internal class Program
             switch (argKey)
             {
                 case ARG_KEY_ASSETS_PATH:
-                    if (fileName == null)
                         assetsPath = argValue;
-                    else
-                        return new(Path.Combine(argValue, fileName));
                     break;
                 case ARG_KEY_INPUT_FILE:
-                    if (assetsPath == null)
                         fileName = argValue;
-                    else
-                        return new(Path.Combine(assetsPath, argValue));
                     break;
                 case ARG_KEY_INPUT_PATH:
-                    return new(argValue);
+                    inputFile = new(argValue);
+                    break;
+                case ARG_KEY_SAVES_PATH:
+                    savesPath = argValue;
+                    break;
                 default:
                     ThrowCriticalError($"Argument key not supported: {arg}", 160);
                     break;
             }
         }
 
-        if (assetsPath == null && fileName != null)
-            ThrowCriticalError($"Argument key [{ARG_KEY_ASSETS_PATH}] must be acompain by [{ARG_KEY_INPUT_FILE}]", 160);
-
-        if (fileName == null && assetsPath != null)
-            ThrowCriticalError($"Argument key [{ARG_KEY_INPUT_FILE}] must be acompain by [{ARG_KEY_ASSETS_PATH}]", 160);
-
-        return new(Path.Combine(ASSETS_PATH, INPUT_NAME));
+        if (inputFile == null)
+        {
+            if (assetsPath == null)
+            {
+                if (fileName == null)
+                    inputFile = new(Path.Combine(DEFAULT_ASSETS_PATH, DEFAULT_INPUT_NAME));
+                else
+                    inputFile = new(Path.Combine(DEFAULT_ASSETS_PATH, fileName));
+            }
+            else
+            {
+                if (fileName == null)
+                    inputFile = new(Path.Combine(assetsPath, DEFAULT_INPUT_NAME));
+                else
+                    inputFile = new(Path.Combine(assetsPath, fileName));
+            }
+        }
+        savesPath ??= DEFAULT_SAVE_PATH;
     }
 
     private static void ThrowCriticalError(string message, int exitCode)
@@ -109,14 +116,12 @@ internal class Program
         Environment.Exit(exitCode);
     }
 
-    private static void ScrapeListings(Item item, UrlKind urlKind, string date)
+    private static void ScrapeListings(Item item, UrlKind urlKind, ResponseProcessor processor)
     {
         UrlBuilder builder = new(item, urlKind);
         UrlKindUtility.GetBusinessAndTypeFromUrlKind(urlKind, out string business, out _, out _, out _);
 
         HttpClient client = GetHttpClient();
-
-        string zipPath = $"{SAVE_PATH}\\{date}\\{item.City}\\{urlKind}.zip";
 
         string url;
 
@@ -128,54 +133,50 @@ internal class Program
         int index = 0;
         int fileName = 0;
 
-
-        using (ResponseProcessor processor = new(zipPath))
+        while (true)
         {
-            while (true)
+
+            int searchSize = SEARCH_LIMIT - index;
+            if (searchSize == 0)
             {
+                if (priceMin == highestPrice)
+                    throw new Exception();
 
-                int searchSize = SEARCH_LIMIT - index;
-                if (searchSize == 0)
-                {
-                    if (priceMin == highestPrice)
-                        throw new Exception();
+                priceMin = highestPrice;
+                index = 0;
+                searchSize = SEARCH_SIZE;
+            }
+            else if (searchSize > SEARCH_SIZE)
+                searchSize = SEARCH_SIZE;
 
-                    priceMin = highestPrice;
-                    index = 0;
-                    searchSize = SEARCH_SIZE;
-                }
-                else if (searchSize > SEARCH_SIZE)
-                    searchSize = SEARCH_SIZE;
+            Console.WriteLine($"Progress: {index} | {searchSize} | {priceMin}RS");
 
-                Console.WriteLine($"Progress: {index} | {searchSize} | {priceMin}RS");
+            url = builder.GetUrl(index, searchSize, priceMin);
+            request = client.GetAsync(url);
+            requestResponse = request.Result;
 
-                url = builder.GetUrl(index, searchSize, priceMin);
-                request = client.GetAsync(url);
-                requestResponse = request.Result;
+            switch (requestResponse.StatusCode)
+            {
+                case HttpStatusCode.OK:
+                    Task<string> readTask = requestResponse.Content.ReadAsStringAsync();
+                    string json = readTask.Result;
+                    processor.Process(new($"{item.City}\\{urlKind}\\{fileName:00000}.json", json), business, ref highestPrice, out int count);
 
-                switch (requestResponse.StatusCode)
-                {
-                    case HttpStatusCode.OK:
-                        Task<string> readTask = requestResponse.Content.ReadAsStringAsync();
-                        string json = readTask.Result;
-                        processor.Process(json, business, ref highestPrice, out int count);
+                    if (count < searchSize)
+                        return;
 
-                        if (count < searchSize)
-                            return;
+                    index += searchSize;
+                    fileName++;
+                    break;
+                case HttpStatusCode.TooManyRequests:
+                    Console.WriteLine(requestResponse.StatusCode);
 
-                        index += searchSize;
-                        fileName++;
-                        break;
-                    case HttpStatusCode.TooManyRequests:
-                        Console.WriteLine(requestResponse.StatusCode);
-
-                        client = GetHttpClient();
-                        break;
-                    default:
-                        Console.WriteLine($"[{index}:{searchSize}] - {requestResponse.StatusCode}");
-                        Console.ReadLine();
-                        break;
-                }
+                    client = GetHttpClient();
+                    break;
+                default:
+                    Console.WriteLine($"[{index}:{searchSize}] - {requestResponse.StatusCode}");
+                    Console.ReadLine();
+                    break;
             }
         }
     }
