@@ -49,7 +49,7 @@ internal class ResponseProcessor : IDisposable
         }
     }
 
-    internal void Process((string fileName, string json) data, string business, ref int highestPrize, out int responseCount)
+    internal void Process((string fileName, string json) data, string business, ref long highestPrize, out int responseCount)
     {
         lock (_queueLock)
         {
@@ -58,27 +58,27 @@ internal class ResponseProcessor : IDisposable
 
         using (JsonDocument doc = JsonDocument.Parse(data.json))
         {
-            int current = Step1(doc.RootElement, business, out responseCount);
+            long current = Step1(doc.RootElement, business, out responseCount);
             if (current > highestPrize)
                 highestPrize = current;
         }
     }
 
-    private static int Step1(JsonElement element, string business, out int count)
+    private static long Step1(JsonElement element, string business, out int count)
     {
-        int output = int.MinValue;
+        long output = long.MinValue;
         count = 0;
 
         if (element.TryGetProperty("search", out JsonElement child))
         {
-            int current = Step2(child, business, out count);
+            long current = Step2(child, business, out count);
             if (output < current)
                 output = current;
         }
 
         if (element.TryGetProperty("developments", out child))
         {
-            int current = Step1(child, business, out count);
+            long current = Step1(child, business, out count);
             if (output < current)
                 output = current;
         }
@@ -86,7 +86,7 @@ internal class ResponseProcessor : IDisposable
         return output;
     }
 
-    private static int Step2(JsonElement element, string business, out int count)
+    private static long Step2(JsonElement element, string business, out int count)
     {
         if (element.TryGetProperty("result", out JsonElement child))
             return Step3(child, business, out count);
@@ -94,7 +94,7 @@ internal class ResponseProcessor : IDisposable
         throw new Exception();
     }
 
-    private static int Step3(JsonElement element, string business, out int count)
+    private static long Step3(JsonElement element, string business, out int count)
     {
         if (element.TryGetProperty("listings", out JsonElement child))
             return Step4(child, business, out count);
@@ -102,14 +102,14 @@ internal class ResponseProcessor : IDisposable
         throw new Exception();
     }
 
-    private static int Step4(JsonElement element, string business, out int count)
+    private static long Step4(JsonElement element, string business, out int count)
     {
-        int output = int.MinValue;
+        long output = long.MinValue;
 
         int length = element.GetArrayLength();
         for (int i = 0; i < length; i++)
         {
-            int current = Step5(element[i], business);
+            long current = Step5(element[i], business);
             if (output < current)
                 output = current;
         }
@@ -118,7 +118,7 @@ internal class ResponseProcessor : IDisposable
         return output;
     }
 
-    private static int Step5(JsonElement element, string business)
+    private static long Step5(JsonElement element, string business)
     {
         if (element.TryGetProperty("listing", out JsonElement child))
             return Step6(child, business);
@@ -126,11 +126,11 @@ internal class ResponseProcessor : IDisposable
         throw new Exception();
     }
 
-    private static int Step6(JsonElement element, string business)
+    private static long Step6(JsonElement element, string business)
     {
         if (element.TryGetProperty("pricingInfos", out JsonElement child))
         {
-            if (Step7(child, business, out int price))
+            if (Step7(child, business, out long price))
                 return price;
             else
             {
@@ -145,7 +145,7 @@ internal class ResponseProcessor : IDisposable
         throw new Exception();
     }
 
-    private static bool Step7(JsonElement element, string business, out int price)
+    private static bool Step7(JsonElement element, string business, out long price)
     {
         bool found = false;
         int length = element.GetArrayLength();
@@ -177,11 +177,11 @@ internal class ResponseProcessor : IDisposable
         return false;
     }
 
-    private static bool Step8(JsonElement element, out int price)
+    private static bool Step8(JsonElement element, out long price)
     {
         if (element.TryGetProperty("price", out JsonElement child))
         {
-            price = int.Parse(child.GetString()!);
+            price = long.Parse(child.GetString()!);
             return true;
         }
         else

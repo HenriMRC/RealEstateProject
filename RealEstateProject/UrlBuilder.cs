@@ -78,7 +78,7 @@ internal class UrlBuilder
         Part_1 = string.Format(FORMAT_PART_1, listingType, includeFields);
     }
 
-    internal string GetUrl(int from, int size, int priceMin)
+    internal string GetUrl(int from, int size, long priceMin)
     {
         string url = Part_0;
         if (priceMin > 0)

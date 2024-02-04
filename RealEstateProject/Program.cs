@@ -41,9 +41,11 @@ internal class Program
                     ScrapeListings(item, business.UrlKind, processor);
                 }
             }
+            Console.Beep();
         }
 
         Console.WriteLine("Finished scrapping. Press [Enter] to close program.");
+        Console.Beep();
         Console.ReadLine();
     }
 
@@ -128,14 +130,13 @@ internal class Program
         Task<HttpResponseMessage> request;
         HttpResponseMessage requestResponse;
 
-        int priceMin = 0;
-        int highestPrice = 0;
+        long priceMin = 0;
+        long highestPrice = 0;
         int index = 0;
         int fileName = 0;
 
         while (true)
         {
-
             int searchSize = SEARCH_LIMIT - index;
             if (searchSize == 0)
             {
@@ -160,7 +161,7 @@ internal class Program
                 case HttpStatusCode.OK:
                     Task<string> readTask = requestResponse.Content.ReadAsStringAsync();
                     string json = readTask.Result;
-                    processor.Process(new($"{item.City}\\{urlKind}\\{fileName:00000}.json", json), business, ref highestPrice, out int count);
+                    processor.Process(new($"{urlKind}\\{fileName:00000}.json", json), business, ref highestPrice, out int count);
 
                     if (count < searchSize)
                         return;
