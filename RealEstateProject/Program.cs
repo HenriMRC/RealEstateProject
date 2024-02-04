@@ -31,9 +31,9 @@ internal class Program
             throw new ArgumentNullException(nameof(input));
 
         string date = DateTime.Now.ToString("yyyy_MM_dd");
-        using (ResponseProcessor processor = new($"{savesPath}\\{date}.zip"))
+        foreach (Item item in input.Items)
         {
-            foreach (Item item in input.Items)
+            using (ResponseProcessor processor = new($"{savesPath}\\{date}\\{item.City}.zip"))
             {
                 foreach (Business business in item.Business)
                 {
@@ -72,10 +72,10 @@ internal class Program
             switch (argKey)
             {
                 case ARG_KEY_ASSETS_PATH:
-                        assetsPath = argValue;
+                    assetsPath = argValue;
                     break;
                 case ARG_KEY_INPUT_FILE:
-                        fileName = argValue;
+                    fileName = argValue;
                     break;
                 case ARG_KEY_INPUT_PATH:
                     inputFile = new(argValue);
