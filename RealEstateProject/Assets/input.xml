@@ -1,12 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <inputs>
-  <!--
-  <item city="São Paulo" state="São Paulo" location_id="BR>Sao Paulo>NULL>Sao Paulo" latitude="-23.555771" longitude="-46.639557" levels="CITY">
-    <business kind="Buy"/>
-    <business kind="Rent"/>
-    <business kind="Development"/>
-  </item>
-  -->
   <item city="Florianópolis" state="Santa Catarina" location_id="BR>Santa Catarina>NULL>Florianopolis" latitude="-27.594804" longitude="-48.556929" levels="CITY">
     <business kind="Buy"/>
     <business kind="Rent"/>
@@ -17,4 +10,47 @@
     <business kind="Rent"/>
     <business kind="Development"/>
   </item>
+  <item city="Palhoça" state="Santa Catarina" location_id="BR>Santa Catarina>NULL>Palhoca" latitude="-27.641122" longitude="-48.678953" levels="CITY">
+    <business kind="Buy"/>
+    <business kind="Rent"/>
+    <business kind="Development"/>
+  </item>
+  <item city="Biguaçu" state="Santa Catarina" location_id="BR>Santa Catarina>NULL>Biguacu" latitude="-27.495567" longitude="-48.655366" levels="CITY">
+    <business kind="Buy"/>
+    <business kind="Rent"/>
+    <business kind="Development"/>
+  </item>
+
+  <item city="São Paulo" state="São Paulo" location_id="BR>Sao Paulo>NULL>Sao Paulo" latitude="-21.426793" longitude="-50.076244" levels="CITY">
+    <business kind="Buy"/>
+    <business kind="Rent"/>
+    <business kind="Development"/>
+  </item>
+  <item city="Guarulhos" state="São Paulo" location_id="BR>Sao Paulo>NULL>Guarulhos" latitude="-22.905082" longitude="-47.061333" levels="CITY">
+    <business kind="Buy"/>
+    <business kind="Rent"/>
+    <business kind="Development"/>
+  </item>
+  <item city="Campinas" state="São Paulo" location_id="BR>Sao Paulo>NULL>Campinas" latitude="-22.905082" longitude="-47.061333" levels="CITY">
+    <business kind="Buy"/>
+    <business kind="Rent"/>
+    <business kind="Development"/>
+  </item>
 </inputs>
+
+
+
+
+  <!--
+Jundiaí
+Santo André
+São Bernardo do Campo
+São Caetano do Sul
+Diadema
+Mauá
+Ribeirão Pires
+Rio Grande da Serra
+Balneário Camboriú
+Itajaí
+Rio de Janeiro
+  -->
