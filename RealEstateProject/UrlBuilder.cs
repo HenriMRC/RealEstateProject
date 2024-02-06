@@ -1,4 +1,6 @@
-﻿namespace RealEstateProject;
+﻿using RealEstateProject.XML;
+
+namespace RealEstateProject;
 
 internal class UrlBuilder
 {

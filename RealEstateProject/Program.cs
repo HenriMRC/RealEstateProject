@@ -1,11 +1,12 @@
 ﻿using System.Xml.Serialization;
+using RealEstateProject.XML;
 
 namespace RealEstateProject;
 
 internal class Program
 {
-    private const string DEFAULT_ASSETS_PATH = ".\\Assets";
-    private const string DEFAULT_SAVE_PATH = ".\\Assets\\Saves";
+    private const string DEFAULT_ASSETS_PATH = "..\\Assets";
+    private const string DEFAULT_SAVE_PATH = "..\\Assets\\Saves";
     private const string DEFAULT_INPUT_NAME = "input.xml";
 
     private const char ARG_KEY_END = ':';

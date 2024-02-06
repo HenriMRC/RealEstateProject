@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace RealEstateProject;
+namespace RealEstateProject.XML;
 
 [XmlRoot("inputs", IsNullable = false)]
 public class Input
