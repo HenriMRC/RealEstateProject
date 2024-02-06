@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
 namespace RealEstateProject;
 
@@ -9,39 +8,68 @@ internal class Program
     private const string DEFAULT_SAVE_PATH = ".\\Assets\\Saves";
     private const string DEFAULT_INPUT_NAME = "input.xml";
 
-    private const int SEARCH_SIZE = 110;
-    private const int SEARCH_LIMIT = 10_000;
-
     private const char ARG_KEY_END = ':';
     private const string ARG_KEY_ASSETS_PATH = "-assets-path";
     private const string ARG_KEY_INPUT_FILE = "-input-file";
     private const string ARG_KEY_INPUT_PATH = "-input-path";
     private const string ARG_KEY_SAVES_PATH = "-saves-path";
 
+    private const int THREADS_MIN = 2; //Main and logger
+    private const int THREADS_DEFAULT = 4;
+
+    private static Queue<Scraper>? _scrapers;
+    private static readonly object _scrapersLock = new();
+
+    private static string? _savesPath;
+    private static string? _date;
+
+    private static readonly Thread s_loggerThread;
+    private static Thread[] s_scrapersThread;
+
+    static Program()
+    {
+        s_loggerThread = new(Logger.ProcessLoop);
+        s_scrapersThread = Array.Empty<Thread>();
+    }
+
     static void Main(string[] args)
     {
+        s_loggerThread.Start();
+
         XmlSerializer serializer = new(typeof(Input));
         Input? input;
 
-        GetInputFile(args, out FileInfo inputFile, out string savesPath);
+        GetInputFile(args, out FileInfo inputFile, out _savesPath);
         using (FileStream reader = inputFile.OpenRead())
             input = (Input?)serializer.Deserialize(reader);
 
         if (input == null)
-            throw new ArgumentNullException(nameof(input));
+            throw new NullReferenceException(nameof(input));
+        _date = DateTime.Now.ToString("yyyy_MM_dd");
 
-        string date = DateTime.Now.ToString("yyyy_MM_dd");
-        foreach (Item item in input.Items)
+        lock (_scrapersLock)
         {
-            using (ResponseProcessor processor = new($"{savesPath}\\{date}\\{item.City}.zip"))
-            {
-                foreach (Business business in item.Business)
-                {
-                    Console.WriteLine($"Scrape: {item.State} {item.City} {business.UrlKind}");
-                    ScrapeListings(item, business.UrlKind, processor);
-                }
-            }
-            Console.Beep();
+            _scrapers = new(input.Items.Length);
+            foreach (Item item in input.Items)
+                _scrapers.Enqueue(new(item));
+        }
+
+        int extraThreadCount = THREADS_DEFAULT - THREADS_MIN;
+        if (extraThreadCount > _scrapers.Count - 1)
+            extraThreadCount = _scrapers.Count - 1;
+
+        s_scrapersThread = new Thread[extraThreadCount];
+        for (int i = 0; i < s_scrapersThread.Length; i++)
+        {
+            s_scrapersThread[i] = new(ScrapeLoop);
+            s_scrapersThread[i].Start();
+        }
+
+        ScrapeLoop();
+
+        while (s_scrapersThread.Any(t => t.ThreadState == ThreadState.Running))
+        {
+            Thread.Sleep(200);
         }
 
         Console.WriteLine("Finished scrapping. Press [Enter] to close program.");
@@ -68,7 +96,7 @@ internal class Program
             if (argKeyEndIndex + 1 == arg.Length)
                 ThrowCriticalError($"Argument must contain a value: {arg}", 160);
 
-            string argKey = arg.Substring(0, argKeyEndIndex);
+            string argKey = arg[..argKeyEndIndex];
             string argValue = arg.Substring(argKeyEndIndex + 1, argKeyEndIndex);
 
             switch (argKey)
@@ -118,75 +146,26 @@ internal class Program
         Environment.Exit(exitCode);
     }
 
-    private static void ScrapeListings(Item item, UrlKind urlKind, ResponseProcessor processor)
+    private static void ScrapeLoop()
     {
-        UrlBuilder builder = new(item, urlKind);
-        UrlKindUtility.GetBusinessAndTypeFromUrlKind(urlKind, out string business, out _, out _, out _);
+        if (_scrapers == null)
+            throw new NullReferenceException(nameof(_scrapers));
 
-        HttpClient client = GetHttpClient();
+        if (_savesPath == null)
+            throw new NullReferenceException(nameof(_savesPath));
+        
+        if (_date == null)
+            throw new NullReferenceException(nameof(_date));
 
-        string url;
-
-        Task<HttpResponseMessage> request;
-        HttpResponseMessage requestResponse;
-
-        long priceMin = 0;
-        long highestPrice = 0;
-        int index = 0;
-        int fileName = 0;
-
+        Scraper? item;
         while (true)
         {
-            int searchSize = SEARCH_LIMIT - index;
-            if (searchSize == 0)
+            lock (_scrapersLock)
             {
-                if (priceMin == highestPrice)
-                    throw new Exception();
-
-                priceMin = highestPrice;
-                index = 0;
-                searchSize = SEARCH_SIZE;
+                if (!_scrapers.TryDequeue(out item))
+                    return;
             }
-            else if (searchSize > SEARCH_SIZE)
-                searchSize = SEARCH_SIZE;
-
-            Console.WriteLine($"Progress: {index} | {searchSize} | {priceMin}RS");
-
-            url = builder.GetUrl(index, searchSize, priceMin);
-            request = client.GetAsync(url);
-            requestResponse = request.Result;
-
-            switch (requestResponse.StatusCode)
-            {
-                case HttpStatusCode.OK:
-                    Task<string> readTask = requestResponse.Content.ReadAsStringAsync();
-                    string json = readTask.Result;
-                    processor.Process(new($"{urlKind}\\{fileName:00000}.json", json), business, ref highestPrice, out int count);
-
-                    if (count < searchSize)
-                        return;
-
-                    index += searchSize;
-                    fileName++;
-                    break;
-                case HttpStatusCode.TooManyRequests:
-                    Console.WriteLine(requestResponse.StatusCode);
-
-                    client = GetHttpClient();
-                    break;
-                default:
-                    Console.WriteLine($"[{index}:{searchSize}] - {requestResponse.StatusCode}");
-                    Console.ReadLine();
-                    break;
-            }
+            item.Scrape(_savesPath, _date);
         }
-    }
-
-    private static HttpClient GetHttpClient()
-    {
-        HttpClient client = new();
-        client.DefaultRequestHeaders.Add("x-domain", "www.vivareal.com.br");
-        client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
-        return client;
     }
 }
