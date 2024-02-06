@@ -1,4 +1,6 @@
-﻿namespace RealEstateProject;
+﻿using System;
+
+namespace RealEstateProject;
 
 internal class LogItem
 {

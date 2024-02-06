@@ -1,4 +1,7 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using RealEstateProject.XML;
 
 namespace RealEstateProject;
@@ -69,9 +72,13 @@ internal class Scraper
             switch (requestResponse.StatusCode)
             {
                 case HttpStatusCode.OK:
-                    Task<string> readTask = requestResponse.Content.ReadAsStringAsync();
-                    string json = readTask.Result;
-                    processor.Process(new($"{urlKind}\\{fileName:00000}.json", json), business, ref highestPrice, out int count);
+                    string json;
+                    int count;
+                    using (Task<string> readTask = requestResponse.Content.ReadAsStringAsync())
+                    {
+                        json = readTask.Result;
+                        processor.Process(new($"{urlKind}\\{fileName:00000}.json", json), business, ref highestPrice, out count);
+                    }
 
                     if (count < searchSize)
                     {
@@ -95,6 +102,7 @@ internal class Scraper
 
     private static HttpClient GetHttpClient()
     {
+        //TODO: HttpClient is IDisposable, should be disposed.
         HttpClient client = new();
         client.DefaultRequestHeaders.Add("x-domain", "www.vivareal.com.br");
         client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");

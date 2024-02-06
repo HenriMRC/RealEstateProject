@@ -1,4 +1,8 @@
-﻿namespace RealEstateProject;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+
+namespace RealEstateProject;
 
 internal class Logger
 {
