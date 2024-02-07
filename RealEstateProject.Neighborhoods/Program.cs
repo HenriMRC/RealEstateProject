@@ -6,11 +6,11 @@ namespace RealEstateProject.Neighborhoods;
 
 internal class Program
 {
-    const string CITY = "São Paulo - SP";
+    const string CITY = "São Paulo";
+    const int SIZE = 110;
 
     static void Main(string[] args)
     {
-        const int SIZE = 110;
         int from = 0;
 
         UrlKind[] kinds = Enum.GetValues<UrlKind>();
@@ -28,19 +28,24 @@ internal class Program
             while (keepGoing);
         }
 
-        foreach ((string id, _) in results)
+        Dictionary<string, JsonObject> validatedResults = [];
+        foreach ((string id, JsonObject obj) in results)
         {
-            Console.WriteLine(id);
+            if (ValidateResult(obj, CITY))
+                validatedResults.Add(id, obj);
+            else
+                Console.WriteLine($"Invalidated: {id}");
         }
 
         Console.WriteLine();
-        Console.WriteLine($"Finished with {results.Count}");
+        Console.WriteLine($"Finished with {validatedResults.Count}:");
+        foreach ((string id, _) in validatedResults)
+            Console.WriteLine(id);
         Console.ReadLine();
     }
 
     private static HttpClient GetHttpClient()
     {
-        //TODO: HttpClient is IDisposable, should be disposed.
         HttpClient client = new();
 
         client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36");
@@ -55,7 +60,9 @@ internal class Program
         while (true)
         {
             string url = urlBuilder.GetUrl(from, size);
+            Console.Write($"Requesting: [ {from} | {size} ]");
             HttpResponseMessage response = client.GetAsync(url).Result;
+            Console.WriteLine($" - {response.StatusCode}");
 
             switch (response.StatusCode)
             {
@@ -116,5 +123,18 @@ internal class Program
             throw new KeyNotFoundException(property);
         else
             return result;
+    }
+
+    private static bool ValidateResult(JsonObject obj, string city)
+    {
+        const string CITY = "city";
+        if(!obj.TryGetPropertyValue(CITY, out JsonNode? node))
+            throw new KeyNotFoundException(CITY);
+        if (node == null)
+            throw new NullReferenceException(nameof(node));
+        
+        string cityValue = node.GetValue<string>();
+
+        return city == cityValue;
     }
 }
