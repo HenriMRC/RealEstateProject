@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstateProject.Neighborh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstateProject.Data", "RealEstateProject.Data\RealEstateProject.Data.csproj", "{A8AD1CB5-7B27-4E35-92F0-88602FF58BE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{03C59DCC-B9EF-433A-9C63-FC889940C357}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstateProject.InputBreaker", "RealEstateProject.InputBreaker\RealEstateProject.InputBreaker.csproj", "{06567D6F-EC83-4887-B886-9A3A52DA422C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{A8AD1CB5-7B27-4E35-92F0-88602FF58BE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8AD1CB5-7B27-4E35-92F0-88602FF58BE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8AD1CB5-7B27-4E35-92F0-88602FF58BE8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{03C59DCC-B9EF-433A-9C63-FC889940C357}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{03C59DCC-B9EF-433A-9C63-FC889940C357}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{03C59DCC-B9EF-433A-9C63-FC889940C357}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{03C59DCC-B9EF-433A-9C63-FC889940C357}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06567D6F-EC83-4887-B886-9A3A52DA422C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06567D6F-EC83-4887-B886-9A3A52DA422C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06567D6F-EC83-4887-B886-9A3A52DA422C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06567D6F-EC83-4887-B886-9A3A52DA422C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

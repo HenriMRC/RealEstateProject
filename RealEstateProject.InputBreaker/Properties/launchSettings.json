@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RealEstateProject.InputBreaker": {
+      "commandName": "Project",
+      "workingDirectory": "."
+    }
+  }
+}

@@ -5,17 +5,13 @@ namespace RealEstateProject;
 internal class LogItem
 {
     private readonly int _line;
-    private readonly int _lineStart;
-    private readonly int _lineMaxLength;
     private readonly string _message;
 
     private readonly static object s_lock = new();
 
-    internal LogItem(int line, int lineStart, int lineMaxLength, string message)
+    internal LogItem(int line, string message)
     {
         _line = line;
-        _lineStart = lineStart;
-        _lineMaxLength = lineMaxLength;
         _message = message;
     }
 
@@ -25,14 +21,14 @@ internal class LogItem
         {
             string message = _message.Trim();
 
-            int max = _lineMaxLength;
+            int max = Console.BufferWidth;
             if (max > _message.Length)
                 max = _message.Length;
             message = _message[..max];
 
-            Console.SetCursorPosition(_lineStart, _line);
-            Console.Write(new string(' ', _lineMaxLength));
-            Console.SetCursorPosition(_lineStart, _line);
+            Console.SetCursorPosition(0, _line);
+            Console.Write(new string(' ', Console.BufferWidth));
+            Console.SetCursorPosition(0, _line);
             Console.WriteLine(message);
         }
     }

@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inputs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <item neighborhood="Santana" zone="Zona Norte" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Norte&gt;Santana" latitude="-23.498996" longitude="-46.625592" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Saúde" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Saude" latitude="-23.607064" longitude="-46.642778" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Consolação" zone="Centro" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Centro&gt;Consolacao" latitude="-23.552058" longitude="-46.652577" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Paraíso" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Paraiso" latitude="-23.589702" longitude="-46.634638" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Butantã" zone="Zona Oeste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Oeste&gt;Butanta" latitude="-23.580861" longitude="-46.739387" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Pinheiros" zone="Zona Oeste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Oeste&gt;Pinheiros" latitude="-23.563579" longitude="-46.691607" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Brooklin" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Brooklin" latitude="-23.608765" longitude="-46.69589" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Tatuapé" zone="Zona Leste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Leste&gt;Tatuape" latitude="-23.535245" longitude="-46.575463" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Aclimação" zone="Centro" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Centro&gt;Aclimacao" latitude="-23.571487" longitude="-46.630972" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Higienópolis" zone="Centro" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Centro&gt;Higienopolis" latitude="-23.545751" longitude="-46.659943" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Tucuruvi" zone="Zona Norte" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Norte&gt;Tucuruvi" latitude="-23.473904" longitude="-46.610817" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Lapa" zone="Zona Oeste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Oeste&gt;Lapa" latitude="-23.553274" longitude="-46.70963" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Jardim Paulista" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Jardim Paulista" latitude="-23.569371" longitude="-46.671978" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Mariana" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Vila Mariana" latitude="-23.589702" longitude="-46.634638" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Olímpia" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Vila Olimpia" latitude="-23.598157" longitude="-46.68293" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Prudente" zone="Zona Leste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Leste&gt;Vila Prudente" latitude="-23.585499" longitude="-46.590024" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Clementino" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Vila Clementino" latitude="-23.598316" longitude="-46.643963" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Barra Funda" zone="Zona Oeste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Oeste&gt;Barra Funda" latitude="-23.529192" longitude="-46.660999" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Madalena" zone="Zona Oeste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Oeste&gt;Vila Madalena" latitude="-23.548709" longitude="-46.692871" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Campo Belo" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Campo Belo" latitude="-23.62203" longitude="-46.67202" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Andrade" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;VILA ANDRADE" latitude="-23.631509" longitude="-46.736743" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Santa Cecília" zone="Centro" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Centro&gt;Santa Cecilia" latitude="-23.541705" longitude="-46.650918" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Indianópolis" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Indianopolis" latitude="-23.612476" longitude="-46.661547" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Jardim América" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Jardim America" latitude="-23.563579" longitude="-46.691607" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Nova Conceição" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Vila Nova Conceicao" latitude="-23.591783" longitude="-46.672733" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Chácara Santo Antônio" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Chacara Santo Antonio" latitude="-23.648124" longitude="-46.72005" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Carrão" zone="Zona Leste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Leste&gt;Vila Carrao" latitude="-23.535245" longitude="-46.575463" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Jardim São Paulo" zone="Zona Norte" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Norte&gt;Jardim Sao Paulo" latitude="-23.4867" longitude="-46.612492" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Alto de Pinheiros" zone="Zona Oeste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Oeste&gt;Alto de Pinheiros" latitude="-23.53985" longitude="-46.710385" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Romana" zone="Zona Oeste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Oeste&gt;Vila Romana" latitude="-23.52919" longitude="-46.697924" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Alto da Lapa" zone="Zona Oeste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Oeste&gt;Alto da Lapa" latitude="-23.528989" longitude="-46.720086" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Chácara Klabin" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Chacara Klabin" latitude="-23.589702" longitude="-46.634638" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Casa Verde" zone="Zona Norte" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Norte&gt;Casa Verde" latitude="-23.510988" longitude="-46.657442" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Brás" zone="Zona Leste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Leste&gt;Bras" latitude="-23.537739" longitude="-46.613951" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Sumaré" zone="Zona Oeste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Oeste&gt;Sumare" latitude="-23.544415" longitude="-46.685197" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Moema" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Moema" latitude="-23.602021" longitude="-46.672103" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Ipiranga" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Ipiranga" latitude="-23.588061" longitude="-46.604037" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Móoca" zone="Zona Leste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Leste&gt;Mooca" latitude="-23.560327" longitude="-46.59959" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Perdizes" zone="Zona Oeste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Oeste&gt;Perdizes" latitude="-23.536902" longitude="-46.674317" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Morumbi" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Morumbi" latitude="-23.61748" longitude="-46.743097" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Jabaquara" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Jabaquara" latitude="-23.658265" longitude="-46.64743" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Cambuci" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Cambuci" latitude="-23.564473" longitude="-46.621113" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Centro" zone="Centro" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Centro&gt;Centro" latitude="-23.545108" longitude="-46.642778" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Suzana" zone="Zona Oeste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Oeste&gt;Vila Suzana" latitude="-23.61748" longitude="-46.743097" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Panamby" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Panamby" latitude="-23.631509" longitude="-46.736743" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Jardim Anália Franco" zone="Zona Leste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Leste&gt;Jardim Analia Franco" latitude="-23.5603" longitude="-46.566217" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Itaim Bibi" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Itaim Bibi" latitude="-23.591783" longitude="-46.672733" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Leopoldina" zone="Zona Oeste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Oeste&gt;Vila Leopoldina" latitude="-23.522734" longitude="-46.711419" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Bela Vista" zone="Centro" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Centro&gt;Bela Vista" latitude="-23.555405" longitude="-46.645643" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Matilde" zone="Zona Leste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Leste&gt;Vila Matilde" latitude="-23.537721" longitude="-46.525646" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Pompeia" zone="Zona Oeste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Oeste&gt;POMPEIA" latitude="-23.538785" longitude="-46.693475" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Santo Amaro" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Santo Amaro" latitude="-23.653663" longitude="-46.706693" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Formosa" zone="Zona Leste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Leste&gt;Vila Formosa" latitude="-23.567186" longitude="-46.543792" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Real Parque" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Real Parque" latitude="-23.608868" longitude="-46.704072" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Mascote" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Vila Mascote" latitude="-23.646411" longitude="-46.666913" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Bosque da Saúde" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Bosque da Saude" latitude="-23.611452" longitude="-46.623336" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Cerqueira César" zone="Centro" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Centro&gt;Cerqueira Cesar" latitude="-23.559397" longitude="-46.668759" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="República" zone="Centro" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Centro&gt;Republica" latitude="-23.545108" longitude="-46.642778" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Jardins" zone="Zona Oeste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Oeste&gt;Jardins" latitude="-23.559397" longitude="-46.668759" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Jardim Marajoara" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Jardim Marajoara" latitude="-23.670663" longitude="-46.690455" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Jaguaré" zone="Zona Oeste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Oeste&gt;Jaguare" latitude="-23.552463" longitude="-46.753895" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Água Branca" zone="Zona Oeste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Oeste&gt;Agua Branca" latitude="-23.515253" longitude="-46.690828" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Planalto Paulista" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Planalto Paulista" latitude="-23.618631" longitude="-46.648275" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Imirim" zone="Zona Norte" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Norte&gt;Imirim" latitude="-23.478148" longitude="-46.655346" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Pirituba" zone="Zona Norte" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Norte&gt;Pirituba" latitude="-23.499973" longitude="-46.722585" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Sônia" zone="Zona Oeste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Oeste&gt;Vila Sonia" latitude="-23.598158" longitude="-46.727301" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Jardim Prudência" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Jardim Prudencia" latitude="-23.645725" longitude="-46.766592" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Penha" zone="Zona Leste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Leste&gt;Penha" latitude="-23.520289" longitude="-46.536724" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Mazzei" zone="Zona Norte" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Norte&gt;Vila Mazzei" latitude="-23.475695" longitude="-46.603057" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Guarani" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Vila Guarani" latitude="-23.628384" longitude="-46.63554" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Regente Feijó" zone="Zona Leste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Leste&gt;Vila Regente Feijo" latitude="-23.5603" longitude="-46.566217" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Penha De Franca" zone="Zona Leste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Leste&gt;Penha De Franca" latitude="-23.525806" longitude="-46.548881" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Campos Eliseos" zone="Centro" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Centro&gt;Campos Eliseos" latitude="-23.532169" longitude="-46.645579" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Campo Grande" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Campo Grande" latitude="-23.684936" longitude="-46.688644" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Jardim Paulistano" zone="Zona Oeste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Oeste&gt;Jardim Paulistano" latitude="-23.570904" longitude="-46.683531" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Maria" zone="Zona Norte" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Norte&gt;Vila Maria" latitude="-23.501857" longitude="-46.57671" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Ema" zone="Zona Leste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Leste&gt;Vila Ema" latitude="-23.590725" longitude="-46.527094" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Tremembé" zone="Zona Norte" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Norte&gt;Tremembe" latitude="-23.465862" longitude="-46.597185" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Jardim Guedala" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Jardim Guedala" latitude="-23.598051" longitude="-46.719873" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Belenzinho" zone="Zona Leste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Leste&gt;Belenzinho" latitude="-23.53689" longitude="-46.591617" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Jardim Bonfiglioli" zone="Zona Oeste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Oeste&gt;Jardim Bonfiglioli" latitude="-23.583596" longitude="-46.76115" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Granja Julieta" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Granja Julieta" latitude="-23.630368" longitude="-46.703792" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Bom Retiro" zone="Centro" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Centro&gt;Bom Retiro" latitude="-23.52567" longitude="-46.640706" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Mandaqui" zone="Zona Norte" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Norte&gt;Mandaqui" latitude="-23.481486" longitude="-46.637953" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Freguesia do Ó" zone="Zona Norte" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Norte&gt;Freguesia do O" latitude="-23.501497" longitude="-46.697702" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Alto da Mooca" zone="Zona Leste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Leste&gt;Alto da Mooca" latitude="-23.564019" longitude="-46.587312" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Itaquera" zone="Zona Leste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Leste&gt;Itaquera" latitude="-23.539612" longitude="-46.453655" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Parque Mandaqui" zone="Zona Norte" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Norte&gt;Parque Mandaqui" latitude="-23.474062" longitude="-46.636703" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Jardim das Acacias" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Jardim das Acacias" latitude="-23.623783" longitude="-46.691059" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Guilherme" zone="Zona Norte" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Norte&gt;Vila Guilherme" latitude="-23.524611" longitude="-46.604187" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Parada Inglesa" zone="Zona Norte" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Norte&gt;Parada Inglesa" latitude="-23.488882" longitude="-46.604187" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Limão" zone="Zona Norte" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Norte&gt;Limao" latitude="-23.491705" longitude="-46.681399" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Pacaembu" zone="Zona Oeste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Oeste&gt;Pacaembu" latitude="-23.546024" longitude="-46.669363" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Liberdade" zone="Centro" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Centro&gt;Liberdade" latitude="-23.571487" longitude="-46.630972" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Horto Florestal" zone="Zona Norte" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Norte&gt;Horto Florestal" latitude="-23.456004" longitude="-46.62982" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Interlagos" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Interlagos" latitude="-23.701697" longitude="-46.705899" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Medeiros" zone="Zona Norte" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Norte&gt;Vila Medeiros" latitude="-23.489255" longitude="-46.584522" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Mirandópolis" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Mirandopolis" latitude="-23.618338" longitude="-46.635497" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Sacomã" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Sacoma" latitude="-23.614995" longitude="-46.596954" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Lauzane Paulista" zone="Zona Norte" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Norte&gt;Lauzane Paulista" latitude="-23.47102" longitude="-46.654241" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Nova Cachoeirinha" zone="Zona Norte" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Norte&gt;Vila Nova Cachoeirinha" latitude="-23.47102" longitude="-46.654241" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Jaragua" zone="Zona Norte" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Norte&gt;Jaragua" latitude="-23.457497" longitude="-46.743813" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Cidade Patriarca" zone="Zona Leste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Leste&gt;Cidade Patriarca" latitude="-23.545991" longitude="-46.509644" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Chácara Inglesa" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Chacara Inglesa" latitude="-23.604993" longitude="-46.62941" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Jardim Europa" zone="Zona Oeste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Oeste&gt;Jardim Europa" latitude="-23.570904" longitude="-46.683531" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Alto Da Boa Vista" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Alto Da Boa Vista" latitude="-23.653663" longitude="-46.706693" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Gumercindo" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Vila Gumercindo" latitude="-23.604304" longitude="-46.621067" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Cidade Monções" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Cidade Moncoes" latitude="-23.608765" longitude="-46.69589" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Água Fria" zone="Zona Norte" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Norte&gt;Agua Fria" latitude="-23.483859" longitude="-46.618616" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Jardim Vila Mariana" zone="bairros" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Barrios&gt;Jardim Vila Mariana" latitude="-23.591682" longitude="-46.625891" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Monumento" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Vila Monumento" latitude="-23.574508" longitude="-46.614132" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Água Rasa" zone="Zona Leste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Leste&gt;Agua Rasa" latitude="-23.507086" longitude="-46.507237" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Santa Teresinha" zone="Zona Norte" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Norte&gt;Santa Teresinha" latitude="-23.492179" longitude="-46.636143" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Esperança" zone="Zona Leste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Leste&gt;Vila Esperanca" latitude="-23.525988" longitude="-46.526131" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Moraes" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Vila Moraes" latitude="-23.626941" longitude="-46.606457" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Buarque" zone="Centro" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Centro&gt;Vila Buarque" latitude="-23.541705" longitude="-46.650918" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Bertioga" zone="Zona Leste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Leste&gt;Vila Bertioga" latitude="-23.561937" longitude="-46.57972" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Ré" zone="Zona Leste" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Leste&gt;Vila Re" latitude="-23.528785" longitude="-46.498608" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Santa Catarina" zone="Zona Sul" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Zona Sul&gt;Vila Santa Catarina" latitude="-23.655209" longitude="-46.638636" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+  <item neighborhood="Vila Constança" zone="bairros" city="São Paulo" state="São Paulo" location_id="BR&gt;Sao Paulo&gt;NULL&gt;Sao Paulo&gt;Barrios&gt;Vila Constanca" latitude="-23.471259" longitude="-46.594544" levels="NEIGHBORHOOD">
+    <business kind="Rent" />
+    <business kind="Sale" />
+    <business kind="Development" />
+  </item>
+</inputs>

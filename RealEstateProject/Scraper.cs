@@ -40,6 +40,8 @@ internal class Scraper
             using ResponseProcessor processor = new(savesPath);
             foreach (Business business in _inputItem.Business)
                 Scrape(_inputItem, business.UrlKind, processor, _logger);
+
+            _logger.Log("finished");
         }
         catch (Exception e)
         {
@@ -98,7 +100,7 @@ internal class Scraper
 
                     if (count < searchSize)
                     {
-                        logger.Log("ended");
+                        logger.Log("writing");
                         return;
                     }
 
