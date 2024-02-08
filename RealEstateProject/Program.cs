@@ -63,7 +63,7 @@ internal class Program
         if (input == null)
             throw new NullReferenceException(nameof(input));
 
-        Console.SetBufferSize(CONSOLE_WIDTH, input.Items.Length);
+        Console.SetBufferSize(CONSOLE_WIDTH, Math.Max(input.Items.Length, CONSOLE_HEIGHT));
 
         s_loggerThread = new(Logger.ProcessLoop);
         s_loggerThread.Start();
