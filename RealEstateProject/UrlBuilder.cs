@@ -9,11 +9,11 @@ internal class UrlBuilder
         "https://glue-api.vivareal.com/v2/listings?" +
         "addressCity={0}" +
         "&addressLocationId={1}" +
-        "&addressNeighborhood=" +
+        "&addressNeighborhood={6}" +
         "&addressState={2}" +
         "&addressCountry=" +
         "&addressStreet=" +
-        "&addressZone=" +
+        "&addressZone={7}" +
         "&addressPointLat={3}" +
         "&addressPointLon={4}" +
         "&business={5}" +
@@ -71,13 +71,15 @@ internal class UrlBuilder
                 throw new NotImplementedException();
         }
 
+        string neighborhood = Uri.EscapeDataString(input.Neighborhood);
+        string zone = Uri.EscapeDataString(input.Zone);
         string city = Uri.EscapeDataString(input.City);
         string locationID = Uri.EscapeDataString(input.LocationID);
         string state = Uri.EscapeDataString(input.State);
         string latitude = Uri.EscapeDataString(input.Latitude);
         string longitude = Uri.EscapeDataString(input.Longitude);
 
-        Part_0 = string.Format(FORMAT_PART_0, city, locationID, state, latitude, longitude, business);
+        Part_0 = string.Format(FORMAT_PART_0, city, locationID, state, latitude, longitude, business, neighborhood, zone);
         Part_1 = string.Format(FORMAT_PART_1, listingType, includeFields);
     }
 

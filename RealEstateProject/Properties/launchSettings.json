@@ -1,6 +1,15 @@
 {
   "profiles": {
-    "RealEstateProject": {
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    },
+    "input_sp": {
+      "commandName": "Project",
+      "commandLineArgs": "-input-file:input_sp.xml",
+      "workingDirectory": "."
+    },
+    "input": {
       "commandName": "Project",
       "workingDirectory": "."
     }

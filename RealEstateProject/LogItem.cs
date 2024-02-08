@@ -9,7 +9,7 @@ internal class LogItem
     private readonly int _lineMaxLength;
     private readonly string _message;
 
-    private readonly object s_lock = new();
+    private readonly static object s_lock = new();
 
     internal LogItem(int line, int lineStart, int lineMaxLength, string message)
     {

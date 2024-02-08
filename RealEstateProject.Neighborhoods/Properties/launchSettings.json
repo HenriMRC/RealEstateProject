@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RealEstateProject.Neighborhoods": {
+      "commandName": "Project",
+      "workingDirectory": "."
+    }
+  }
+}

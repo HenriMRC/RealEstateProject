@@ -17,17 +17,33 @@ internal class Scraper
     internal Scraper(Item inputItem)
     {
         _inputItem = inputItem;
-        _logger = Logger.GetLogger($"{inputItem.State} {inputItem.City}");
+        string description = $"{inputItem.State} {inputItem.City}";
+        if (!string.IsNullOrWhiteSpace(inputItem.Neighborhood))
+            description += $" {inputItem.Neighborhood}";
+        _logger = Logger.GetLogger(description);
         _logger.Log("idle");
     }
 
     internal void Scrape(string savesPath, string date)
     {
-        _logger.Log("init");
-        using ResponseProcessor processor = new($"{savesPath}\\{date}\\{_inputItem.City}.zip");
-        foreach (Business business in _inputItem.Business)
+        try
         {
-            Scrape(_inputItem, business.UrlKind, processor, _logger);
+            _logger.Log("init");
+
+            savesPath += $"\\{date}\\{_inputItem.City}";
+            if (!string.IsNullOrWhiteSpace(_inputItem.Zone))
+                savesPath += $"\\{_inputItem.Zone}";
+            if (!string.IsNullOrWhiteSpace(_inputItem.Neighborhood))
+                savesPath += $"\\{_inputItem.Neighborhood}";
+            savesPath += ".zip";
+
+            using ResponseProcessor processor = new(savesPath);
+            foreach (Business business in _inputItem.Business)
+                Scrape(_inputItem, business.UrlKind, processor, _logger);
+        }
+        catch (Exception e)
+        {
+            _logger.Log(e.Message);
         }
     }
 

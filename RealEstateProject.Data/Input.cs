@@ -12,6 +12,12 @@ public class Input
 
 public class Item
 {
+    [XmlAttribute("neighborhood")]
+    public string Neighborhood = string.Empty;
+
+    [XmlAttribute("zone")]
+    public string Zone = string.Empty;
+
     [XmlAttribute("city")]
     public string City = string.Empty;
 

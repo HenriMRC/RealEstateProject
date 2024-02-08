@@ -29,19 +29,30 @@ internal class Program
     private static string? _savesPath;
     private static string? _date;
 
-    private static readonly Thread s_loggerThread;
-    private static Thread[] s_scrapersThread;
+    private static Thread? s_loggerThread = null;
+    private static Thread[]? s_scrapersThread;
 
-    static Program()
-    {
-        s_loggerThread = new(Logger.ProcessLoop);
-        s_scrapersThread = Array.Empty<Thread>();
-    }
+    private const int CONSOLE_WIDTH = 200;
+    private const int CONSOLE_HEIGHT = 30;
 
     static void Main(string[] args)
     {
-        s_loggerThread.Start();
+        try
+        {
+            //TODO: console alloc should not be here
+            ConsoleUtils.AllocConsole();
+            Console.SetWindowSize(CONSOLE_WIDTH, CONSOLE_HEIGHT);
+            ConsoleUtils.DisableResizing();
+            Exec(args);
+        }
+        finally
+        {
+            ConsoleUtils.FreeConsole();
+        }
+    }
 
+    private static void Exec(string[] args)
+    {
         XmlSerializer serializer = new(typeof(Input));
         Input? input;
 
@@ -51,6 +62,12 @@ internal class Program
 
         if (input == null)
             throw new NullReferenceException(nameof(input));
+
+        Console.SetBufferSize(CONSOLE_WIDTH, input.Items.Length);
+
+        s_loggerThread = new(Logger.ProcessLoop);
+        s_loggerThread.Start();
+        
         _date = DateTime.Now.ToString("yyyy_MM_dd");
 
         lock (_scrapersLock)
@@ -103,7 +120,7 @@ internal class Program
                 ThrowCriticalError($"Argument must contain a value: {arg}", 160);
 
             string argKey = arg[..argKeyEndIndex];
-            string argValue = arg.Substring(argKeyEndIndex + 1, argKeyEndIndex);
+            string argValue = arg[(argKeyEndIndex + 1)..];
 
             switch (argKey)
             {

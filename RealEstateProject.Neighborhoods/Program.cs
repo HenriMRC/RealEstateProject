@@ -1,6 +1,8 @@
 ﻿using RealEstateProject.Data;
+using System.Globalization;
 using System.Net;
 using System.Text.Json.Nodes;
+using System.Xml.Serialization;
 
 namespace RealEstateProject.Neighborhoods;
 
@@ -11,6 +13,8 @@ internal class Program
 
     static void Main(string[] args)
     {
+        CultureInfo.CurrentCulture = new("en-US");
+
         int from = 0;
 
         UrlKind[] kinds = Enum.GetValues<UrlKind>();
@@ -38,9 +42,23 @@ internal class Program
         }
 
         Console.WriteLine();
-        Console.WriteLine($"Finished with {validatedResults.Count}:");
-        foreach ((string id, _) in validatedResults)
-            Console.WriteLine(id);
+        Console.WriteLine($"Finished with {validatedResults.Count}");
+
+        List<Item> items = [];
+        foreach ((string id, JsonObject obj) in validatedResults)
+            items.Add(ConvertToItem(obj));
+
+        Input input = new() { Items = [.. items] };
+
+        XmlSerializer serializer = new(typeof(Input));
+        FileInfo fileInfo = new("..\\Assets\\NewInput.xml");
+        if (fileInfo.Exists)
+            fileInfo.Delete();
+        using (FileStream file = fileInfo.Create())
+        {
+            serializer.Serialize(file, input);
+        }
+
         Console.ReadLine();
     }
 
@@ -128,13 +146,51 @@ internal class Program
     private static bool ValidateResult(JsonObject obj, string city)
     {
         const string CITY = "city";
-        if(!obj.TryGetPropertyValue(CITY, out JsonNode? node))
+        if (!obj.TryGetPropertyValue(CITY, out JsonNode? node))
             throw new KeyNotFoundException(CITY);
         if (node == null)
             throw new NullReferenceException(nameof(node));
-        
+
         string cityValue = node.GetValue<string>();
 
         return city == cityValue;
+    }
+
+    private static Item ConvertToItem(JsonNode obj)
+    {
+        Item output = new();
+
+        JsonNode node = NavigateJsonNode(obj, "neighborhood");
+        output.Neighborhood = node.GetValue<string>();
+
+        node = NavigateJsonNode(obj, "zone");
+        output.Zone = node.GetValue<string>();
+
+        node = NavigateJsonNode(obj, "city");
+        output.City = node.GetValue<string>();
+
+        node = NavigateJsonNode(obj, "state");
+        output.State = node.GetValue<string>();
+
+        node = NavigateJsonNode(obj, "locationId");
+        output.LocationID = node.GetValue<string>();
+
+        obj = NavigateJsonNode(obj, "point");
+        node = NavigateJsonNode(obj, "lat");
+        output.Latitude = node.GetValue<decimal>().ToString();
+
+        node = NavigateJsonNode(obj, "lon");
+        output.Longitude = node.GetValue<decimal>().ToString();
+
+        output.Levels = "NEIGHBORHOOD";
+
+        output.Business =
+            [
+                new() { UrlKind = UrlKind.Rent },
+                new() { UrlKind = UrlKind.Sale },
+                new() { UrlKind = UrlKind.Development }
+            ];
+
+        return output;
     }
 }

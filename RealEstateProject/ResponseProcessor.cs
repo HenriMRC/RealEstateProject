@@ -35,6 +35,7 @@ internal class ResponseProcessor : IDisposable
                 if (_finish && _queue.Count == 0)
                     return;
 
+                //TODO: reveal
                 if (!_queue.TryDequeue(out data))
                     continue;
             }
@@ -153,6 +154,8 @@ internal class ResponseProcessor : IDisposable
     {
         bool found = false;
         int length = element.GetArrayLength();
+        price = int.MaxValue;
+
         for (int i = 0; i < length; i++)
         {
             JsonElement child = element[i];
@@ -162,13 +165,15 @@ internal class ResponseProcessor : IDisposable
                 string businessType = businessTypeElement.GetString() ?? throw new ArgumentNullException();
                 if (businessType == business)
                 {
-                    if (found)
-                        throw new Exception();
-                    else
-                        found = true;
+                    bool output = Step8(child, out long result);
 
-                    if (Step8(child, out price))
-                        return true;
+                    if (output)
+                    {
+                        found = true;
+                        if (result < price)
+                            price = result;
+                    }
+
                 }
                 else
                     continue;
@@ -177,8 +182,7 @@ internal class ResponseProcessor : IDisposable
                 throw new ArgumentOutOfRangeException();
         }
 
-        price = 0;
-        return false;
+        return found;
     }
 
     private static bool Step8(JsonElement element, out long price)
