@@ -20,31 +20,22 @@
     <business kind="Rent"/>
     <business kind="Development"/>
   </item>
-  <!--
-  <item city="São Paulo" state="São Paulo" location_id="BR>Sao Paulo>NULL>Sao Paulo" latitude="-21.426793" longitude="-50.076244" levels="CITY">
-    <business kind="Sale"/>
-    <business kind="Rent"/>
-    <business kind="Development"/>
-  </item>
-  -->
   <item city="Guarulhos" state="São Paulo" location_id="BR>Sao Paulo>NULL>Guarulhos" latitude="-22.905082" longitude="-47.061333" levels="CITY">
     <business kind="Sale"/>
     <business kind="Rent"/>
     <business kind="Development"/>
   </item>
-  <!--
   <item city="Campinas" state="São Paulo" location_id="BR>Sao Paulo>NULL>Campinas" latitude="-22.905082" longitude="-47.061333" levels="CITY">
     <business kind="Sale"/>
     <business kind="Rent"/>
     <business kind="Development"/>
   </item>
-  -->
 </inputs>
 
 
 
 
-  <!--
+<!--
 Jundiaí
 Santo André
 São Bernardo do Campo
