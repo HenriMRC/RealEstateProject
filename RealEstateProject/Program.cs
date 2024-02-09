@@ -90,7 +90,7 @@ internal class Program
 
         ScrapeLoop();
 
-        while (s_scrapersThread.Any(t => t.ThreadState == ThreadState.Running))
+        while (s_scrapersThread.Any(t => t.IsAlive))
         {
             Thread.Sleep(200);
         }
