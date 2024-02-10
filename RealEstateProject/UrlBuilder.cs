@@ -6,7 +6,7 @@ namespace RealEstateProject;
 internal class UrlBuilder
 {
     private const string FORMAT_PART_0 =
-        "https://glue-api.vivareal.com/v2/listings?" +
+        "https://glue-api.vivareal.com/v3/listings?" +
         "addressCity={0}" +
         "&addressLocationId={1}" +
         "&addressNeighborhood={6}" +
@@ -44,7 +44,8 @@ internal class UrlBuilder
     private const string FORMAT_DEVELOPMENT = "&developmentsSize={0}";
 
     private const string FORMAT_PART_3 =
-        "&__vt=control" +
+        //"&__vt=control" +
+        "&__vt=mtc%3Acontrol%2CB" +
         "&levels=CITY" +
         "&ref=" +
         "&pointRadius=" +
@@ -54,6 +55,7 @@ internal class UrlBuilder
     private readonly string Part_1;
     private readonly string Part_2;
 
+    //TODO: review with UriBuilder builder = new UriBuilder();
     public UrlBuilder(Item input, UrlKind kind)
     {
         UrlKindUtility.GetBusinessAndTypeFromUrlKind(kind, out string business, out string listingType, out string includeFields, out string sort);

@@ -12,6 +12,11 @@
     "input": {
       "commandName": "Project",
       "workingDirectory": "."
+    },
+    "input_sp_1": {
+      "commandName": "Project",
+      "commandLineArgs": "-input-file:input_sp_1.xml",
+      "workingDirectory": "."
     }
   }
 }

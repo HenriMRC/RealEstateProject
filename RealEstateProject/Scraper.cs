@@ -1,8 +1,8 @@
-﻿using System;
+﻿using RealEstateProject.Data;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using RealEstateProject.Data;
 
 namespace RealEstateProject;
 
@@ -54,17 +54,27 @@ internal class Scraper
         UrlBuilder builder = new(item, urlKind);
         UrlKindUtility.GetBusinessAndTypeFromUrlKind(urlKind, out string business, out _, out _, out _);
 
-        HttpClient client = GetHttpClient();
+        long priceMin = 0;
+        int index = 0;
+        int fileName = 0;
 
+        bool keepGoing;
+        do
+        {
+            using HttpClient client = GetHttpClient();
+            keepGoing = Request(client, builder, business, urlKind, ref index, ref priceMin, ref fileName, processor, logger);
+        }
+        while (keepGoing);
+    }
+
+    private static bool Request(HttpClient client, UrlBuilder builder, string business, UrlKind urlKind, ref int index, ref long priceMin, ref int fileName, ResponseProcessor processor, Logger logger)
+    {
         string url;
 
         Task<HttpResponseMessage> request;
         HttpResponseMessage requestResponse;
 
-        long priceMin = 0;
-        long highestPrice = 0;
-        int index = 0;
-        int fileName = 0;
+        long highestPrice = priceMin;
 
         while (true)
         {
@@ -72,7 +82,7 @@ internal class Scraper
             if (searchSize == 0)
             {
                 if (priceMin == highestPrice)
-                    throw new Exception();
+                    throw new Exception($"{nameof(priceMin)} and {nameof(highestPrice)} are equal!");
 
                 priceMin = highestPrice;
                 index = 0;
@@ -101,29 +111,27 @@ internal class Scraper
                     if (count < searchSize)
                     {
                         logger.Log("writing");
-                        return;
+                        return false;
                     }
 
                     index += searchSize;
                     fileName++;
                     break;
                 case HttpStatusCode.TooManyRequests:
-                    //Console.WriteLine(requestResponse.StatusCode);
-                    client = GetHttpClient();
-                    break;
+                    return true;
                 default:
                     logger.Log($"[{index}:{searchSize}] - {requestResponse.StatusCode}");
-                    break;
+                    throw new HttpRequestException(requestResponse.StatusCode.ToString());
             }
         }
     }
 
     private static HttpClient GetHttpClient()
     {
-        //TODO: HttpClient is IDisposable, should be disposed.
         HttpClient client = new();
         client.DefaultRequestHeaders.Add("x-domain", "www.vivareal.com.br");
         client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
+
         return client;
     }
 }

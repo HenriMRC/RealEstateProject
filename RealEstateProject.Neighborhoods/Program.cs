@@ -27,7 +27,7 @@ internal class Program
             do
             {
                 using HttpClient client = GetHttpClient();
-                keepGoing = Resquest(client, urlBuilder, SIZE, ref from, results);
+                keepGoing = Request(client, urlBuilder, SIZE, ref from, results);
             }
             while (keepGoing);
         }
@@ -73,7 +73,7 @@ internal class Program
         return client;
     }
 
-    private static bool Resquest(HttpClient client, UrlBuilder urlBuilder, int size, ref int from, Dictionary<string, JsonObject> results)
+    private static bool Request(HttpClient client, UrlBuilder urlBuilder, int size, ref int from, Dictionary<string, JsonObject> results)
     {
         while (true)
         {
