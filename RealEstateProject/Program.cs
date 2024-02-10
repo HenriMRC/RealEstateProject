@@ -95,7 +95,9 @@ internal class Program
             Thread.Sleep(200);
         }
 
-        Console.WriteLine("Finished scrapping. Press [Enter] to close program.");
+        Logger logger = Logger.GetLogger("Main");
+
+        logger.Log("Finished scrapping. Press [Enter] to close program.");
         Console.Beep();
         Console.ReadLine();
     }

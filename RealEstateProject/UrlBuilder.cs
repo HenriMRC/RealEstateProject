@@ -6,7 +6,7 @@ namespace RealEstateProject;
 internal class UrlBuilder
 {
     private const string FORMAT_PART_0 =
-        "https://glue-api.vivareal.com/v3/listings?" +
+        "https://glue-api.vivareal.com/v2/listings?" +
         "addressCity={0}" +
         "&addressLocationId={1}" +
         "&addressNeighborhood={6}" +
